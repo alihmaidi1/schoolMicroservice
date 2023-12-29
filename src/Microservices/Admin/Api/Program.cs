@@ -45,8 +45,8 @@ builder.Services.AddSwaggerGen().AddOpenApi("admin","admin dashboard","v1","admi
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+// if (app.Environment.IsDevelopment())
+// {
     using(var scope= app.Services.CreateScope()){
     
 
@@ -58,7 +58,7 @@ if (app.Environment.IsDevelopment())
     app.ConfigureOpenAPI("admin");
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+// }
 
 
 app.UseMiddleware<ErrorHandling>();

@@ -1,0 +1,57 @@
+﻿services:
+  adminapi:
+    image: adminschoolapi
+    container_name: adminapi
+    build:
+      context: .
+      dockerfile: Microservices/Admin/Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    depends_on:
+      redis:
+        condition: service_started
+        restart: true  
+      sqlserver:
+        condition: service_healthy
+        restart: true
+    ports:
+      - "5000:80"
+
+  ocelotgateway:
+    image: ocelotgatewayschool
+    container_name: ocelotgateway
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    build:
+      context: .
+      dockerfile: ApiGateways/OcelotGateway/Dockerfile
+    depends_on:
+      - adminapi
+    ports:
+      - "5005:80"
+    
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6378:6379"
+
+  sqlserver:
+    image: "mcr.microsoft.com/mssql/server"
+    container_name: sqlserver
+    ports:
+      - "1435:1433"
+    environment:
+      SA_PASSWORD: "S3cur3P@ssW0rd!"
+      ACCEPT_EULA: "Y"
+    restart: always
+    
+    healthcheck:
+      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "S3cur3P@ssW0rd!" -Q "SELECT 1" -b -o /dev/null
+      interval: 10s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+      
+      
