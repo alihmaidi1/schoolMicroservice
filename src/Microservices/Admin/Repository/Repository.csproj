@@ -6,4 +6,15 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Reference Include="Microsoft.EntityFrameworkCore">
+        <HintPath>..\..\..\..\..\..\.nuget\packages\microsoft.entityframeworkcore\6.0.0\lib\net6.0\Microsoft.EntityFrameworkCore.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Common\Common.csproj" />
+      <ProjectReference Include="..\Infrutructure\Infrutructure.csproj" />
+    </ItemGroup>
+
 </Project>

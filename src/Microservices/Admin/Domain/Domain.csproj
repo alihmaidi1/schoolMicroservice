@@ -6,4 +6,21 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="EntityFrameworkCore.EncryptColumn" Version="6.0.8" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.AspNetCore.Authorization">
+        <HintPath>..\..\..\..\..\..\..\..\usr\lib\dotnet\shared\Microsoft.AspNetCore.App\7.0.14\Microsoft.AspNetCore.Authorization.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions">
+        <HintPath>..\..\..\..\..\..\..\..\usr\lib\dotnet\shared\Microsoft.AspNetCore.App\7.0.14\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Common\Common.csproj" />
+    </ItemGroup>
+
 </Project>
