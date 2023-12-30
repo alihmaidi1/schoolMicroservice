@@ -8,6 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="8.0.0" />
+        <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="8.0.0" />
+        <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="8.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.14"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.14">
           <PrivateAssets>all</PrivateAssets>

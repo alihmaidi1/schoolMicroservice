@@ -4,12 +4,15 @@ using Common.Api;
 using Common.Jwt;
 using Common.Swagger;
 using Domain.Enum;
+using HealthChecks.UI.Client;
 using Infrutructure;
 using Infrutructure.Authorization;
 using Infrutructure.Authorization.Handlers;
 using Infrutructure.Seed;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
 using Repository;
 
@@ -20,11 +23,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
+builder.Services.AddHealthChecks()
+    .AddSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"],failureStatus:HealthStatus.Degraded)
+    .AddRedis(builder.Configuration["RedisConnection"],failureStatus:HealthStatus.Degraded);
+
 
 builder.Services.Configure<JwtSetting>(builder.Configuration.GetRequiredSection("JwtAdmin"));
 builder.Services.AddTransient<ErrorHandling>();
 builder.Services.AddScoped<IAuthorizationHandler,RolesAuthorizationHandler>();
 builder.Services.AddInfrustucture(builder.Configuration);
+
 
 builder.Services.AddRepository();
 
@@ -65,6 +73,13 @@ app.UseMiddleware<ErrorHandling>();
 
 app.UseHttpsRedirection();
 
+app.MapHealthChecks("/_healthcheck",new HealthCheckOptions()
+{
+    
+    Predicate = _=>true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    
+});
 
 app.UseAuthorization();
 
