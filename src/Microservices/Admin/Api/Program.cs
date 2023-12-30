@@ -1,9 +1,11 @@
 using Admin;
 using Api.Middleware;
 using Common.Api;
+using Common.Email;
 using Common.Jwt;
 using Common.Swagger;
 using Domain.Enum;
+using Hangfire;
 using HealthChecks.UI.Client;
 using Infrutructure;
 using Infrutructure.Authorization;
@@ -25,22 +27,27 @@ builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavi
 
 builder.Services.AddHealthChecks()
     .AddSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"],failureStatus:HealthStatus.Degraded)
-    .AddRedis(builder.Configuration["RedisConnection"],failureStatus:HealthStatus.Degraded);
+    .AddRedis(builder.Configuration["RedisConnection"],failureStatus:HealthStatus.Degraded)
+    .AddHangfire(null);
 
 
-builder.Services.Configure<JwtSetting>(builder.Configuration.GetRequiredSection("JwtAdmin"));
+
+// builder.Services.Configure<JwtSetting>(builder.Configuration.GetRequiredSection("JwtAdmin"));
+builder.Services.Configure<MailSetting>(builder.Configuration.GetRequiredSection("Email"));
+
+
 builder.Services.AddTransient<ErrorHandling>();
 builder.Services.AddScoped<IAuthorizationHandler,RolesAuthorizationHandler>();
 builder.Services.AddInfrustucture(builder.Configuration);
 
 
-builder.Services.AddRepository();
+builder.Services.AddRepository(builder.Configuration);
 
 
 builder.Services.AddAdmindependency();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-builder.Services.AddJwtConfigration(builder.Configuration,JwtSchema.JwtAdmin.ToString(),JwtSchema.JwtAdmin.ToString());
+builder.Services.AddJwtConfigration(builder.Configuration,JwtSchema.JwtAdmin.ToString(),JwtSchema.JwtAdmin.ToString(),JwtSchema.JwtResetAdmin.ToString());
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -81,6 +88,7 @@ app.MapHealthChecks("/_healthcheck",new HealthCheckOptions()
     
 });
 
+app.UseHangfireDashboard("/hangfiredashboard");
 app.UseAuthorization();
 
 app.MapControllers();

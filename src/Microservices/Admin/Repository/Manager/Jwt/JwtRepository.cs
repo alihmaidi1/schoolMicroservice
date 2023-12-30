@@ -19,13 +19,13 @@ public class JwtRepository:IJwtRepository
 
     public readonly ICacheRepository CacheRepository;
 
-    public JwtRepository(IOptions<JwtSetting>  Setting, ApplicationDbContext DbContext, ICacheRepository cacheRepository)
+    public JwtRepository(JwtSetting  Setting, ApplicationDbContext DbContext, ICacheRepository cacheRepository)
     {
 
         
         this.Context = DbContext;
         this.CacheRepository = cacheRepository;
-        this.JwtOption = Setting.Value;
+        this.JwtOption = Setting;
 
     }
     

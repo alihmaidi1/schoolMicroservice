@@ -1,5 +1,6 @@
 using Common.OperationResult;
 using Domain.Entities.Manager.Admin;
+using Domain.Enum;
 using Dto.Auth;
 using Infrutructure;
 using MediatR;
@@ -9,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Model.Auth.Command;
 using Repository.Manager.Admin;
 using Repository.Manager.Jwt;
+using Repository.Manager.Jwt.Factory;
 
 namespace Admin.Auth.Command.Handler;
 
@@ -28,10 +30,10 @@ public class AuthCommandHandler:OperationResult,
 
     private IAdminRepository AdminRepository;
 
-    public AuthCommandHandler(IHttpContextAccessor _httpContextAccessor,IJwtRepository jwtRepository,IAdminRepository AdminRepository,ApplicationDbContext DbContext)
+    public AuthCommandHandler(IHttpContextAccessor _httpContextAccessor,ISchemaFactory schemaFactory,IAdminRepository AdminRepository,ApplicationDbContext DbContext)
     {
         this._httpContextAccessor = _httpContextAccessor;
-        this.jwtRepository = jwtRepository;
+        this.jwtRepository = schemaFactory.CreateJwt(JwtSchema.JwtAdmin);
         this.DbContext = DbContext;
         this.AdminRepository = AdminRepository;
 

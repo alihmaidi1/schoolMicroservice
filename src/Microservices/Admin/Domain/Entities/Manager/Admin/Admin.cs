@@ -28,6 +28,12 @@ public class Admin:AccountEntity<AdminID>
     
     [EncryptColumn]
 
+    public string? ResetCode { get; set; }
+
+    
+    
+    [EncryptColumn]
+
     public string Password { get; set; }
     
     public  ICollection<AdminRefreshToken>? RefreshTokens { get; set; }

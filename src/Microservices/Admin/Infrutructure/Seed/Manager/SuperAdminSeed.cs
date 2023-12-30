@@ -24,7 +24,7 @@ public static class SuperAdminSeed
             Admin SuperAdmin = new Admin()
             {
                 Name =RoleEnum.SuperAdmin.ToString(),
-                Email = "SuperAdmin@gmail.com",
+                Email = "alihmaidi095@gmail.com",
                 Password = "12345678",
                 Role = role
 
