@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Repository.Manager.Admin;
 using Repository.Manager.Jwt;
 using Repository.Manager.Jwt.Factory;
+using Repository.Manager.Role;
 
 namespace Repository;
 
@@ -21,6 +22,7 @@ public static class dependencyInjection
         // services.AddTransient<IJwtRepository,JwtRepository>();
         services.AddTransient<IMailService, MailService>();
         services.AddTransient<ISchemaFactory, SchemaFactory>();
+        services.AddTransient<IRoleRepository,RoleRepository>();
         // services.AddTransient<IAdminRefreshTokenRepository,AdminRefreshTokenRepository>();
 
         return services;
