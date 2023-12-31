@@ -10,16 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOcelot();
 builder.Services.AddEndpointsApiExplorer();
-
-
-
-
-builder.Configuration.AddOcelotFileConfig("Development");
+builder.Configuration.AddOcelotFileConfig(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
 builder.Services.AddSwaggerForOcelot(builder.Configuration);
-
-
 var app = builder.Build();
-
 
 
 app.MapGet("/", () => "Hello World!");

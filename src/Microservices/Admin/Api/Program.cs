@@ -1,3 +1,4 @@
+using System.Reflection;
 using Admin;
 using Api.Middleware;
 using Common.Api;
@@ -8,15 +9,15 @@ using Domain.Enum;
 using Hangfire;
 using HealthChecks.UI.Client;
 using Infrutructure;
-using Infrutructure.Authorization;
 using Infrutructure.Authorization.Handlers;
 using Infrutructure.Seed;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.OpenApi.Models;
 using Repository;
+using Serilog;
+using Serilog.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,37 @@ builder.Services.AddHealthChecks()
     .AddSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"],failureStatus:HealthStatus.Degraded)
     .AddRedis(builder.Configuration["RedisConnection"],failureStatus:HealthStatus.Degraded)
     .AddHangfire(null);
+
+
+if (!Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT").Equals("Development"))
+{
+    
+    builder.Host.UseSerilog((context, configuration) =>
+    {
+        configuration.Enrich
+            .FromLogContext()
+            .Enrich.WithMachineName()
+            .WriteTo.Elasticsearch(
+                new Serilog.Sinks.Elasticsearch.ElasticsearchSinkOptions(
+                    new Uri(context.Configuration["ElasticConfiguration:Uri"]))
+                {
+
+                    IndexFormat =
+                        $"applog-{Assembly.GetExecutingAssembly().GetName().Name.ToLower()}-{context.HostingEnvironment.EnvironmentName}-log-{DateTime.UtcNow:yy-MM-dd}",
+                    AutoRegisterTemplate = true,
+                    NumberOfShards = 2,
+                    NumberOfReplicas = 1
+                }
+            )
+            .Enrich.WithProperty("Enviroment",context.HostingEnvironment.EnvironmentName)
+            .ReadFrom.Configuration(context.Configuration);
+            
+
+    });
+    
+    
+}
+
 
 
 
@@ -59,16 +91,17 @@ builder.Services.AddSwaggerGen().AddOpenApi("admin","admin dashboard","v1","admi
 
 var app = builder.Build();
 
+if (!app.Environment.IsDevelopment())
+{
+
+    
+}
+
 // Configure the HTTP request pipeline.
 // if (app.Environment.IsDevelopment())
 // {
     using(var scope= app.Services.CreateScope()){
-    
-
-    
         await DatabaseSeed.InitializeAsync(scope.ServiceProvider);
-
-
     }
     app.ConfigureOpenAPI("admin");
     app.UseSwagger();
@@ -78,7 +111,11 @@ var app = builder.Build();
 
 app.UseMiddleware<ErrorHandling>();
 
+
+
 app.UseHttpsRedirection();
+
+
 
 app.MapHealthChecks("/_healthcheck",new HealthCheckOptions()
 {
@@ -87,6 +124,7 @@ app.MapHealthChecks("/_healthcheck",new HealthCheckOptions()
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
     
 });
+
 
 app.UseHangfireDashboard("/hangfiredashboard");
 app.UseAuthorization();
