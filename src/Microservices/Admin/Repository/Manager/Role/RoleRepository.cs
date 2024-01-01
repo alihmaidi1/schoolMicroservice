@@ -32,7 +32,7 @@ public class RoleRepository:GenericRepository<Domain.Entities.Manager.Role.Role>
 
     public bool IsExists(string Name)
     {
-     
+        
         return DbContext.Roles.Any(x=>x.Name.Equals(Name));
 
     }

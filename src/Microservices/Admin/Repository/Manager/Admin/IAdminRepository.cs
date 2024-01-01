@@ -1,4 +1,8 @@
+using Common.EntityOperation;
 using Domain.Entities.Manager.Admin;
+using Domain.Entities.Manager.Role;
+using Dto.Manager.Admin;
+using Dto.Manager.Role;
 using Repository.Base;
 
 namespace Repository.Manager.Admin;
@@ -9,6 +13,9 @@ public interface IAdminRepository:IgenericRepository<Domain.Entities.Manager.Adm
     
     public bool IsEmailExists(string Email);
 
+    public bool IsExists(AdminID Id);
+
+    public bool IsEmailExists(string Email,AdminID Id);
 
 
     public Domain.Entities.Manager.Admin.Admin GetById(string Id);
@@ -22,5 +29,13 @@ public interface IAdminRepository:IgenericRepository<Domain.Entities.Manager.Adm
     
     public bool Logout(string Token);
 
+
+
+    public bool Add(string Email,string Password,RoleID roleId,string Name);
+
+    public bool Update(AdminID Id, string Email,string Password,RoleID roleId,string Name);
+
     
+    public PageList<GetAllAdmin> GetAlladmin(string? OrderBy, int? pageNumber, int? pageSize);
+
 }

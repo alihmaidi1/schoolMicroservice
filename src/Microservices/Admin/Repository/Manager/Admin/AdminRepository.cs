@@ -1,14 +1,21 @@
 using System.Security.Claims;
 using Common.Email;
+using Common.EntityOperation;
 using Common.ExtensionMethod;
 using Common.Redis;
 using Domain.Entities.Manager.Admin;
+using Domain.Entities.Manager.Role;
+using Domain.Enum;
+using Dto.Manager.Admin;
+using Dto.Manager.Role;
 using Hangfire;
 using Infrutructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Repository.Base;
+using Repository.Manager.Admin.Operation;
+using Repository.Manager.Role.Operation;
 
 namespace Repository.Manager.Admin;
 
@@ -32,6 +39,13 @@ public class AdminRepository:GenericRepository<Domain.Entities.Manager.Admin.Adm
         
     }
 
+    
+    public bool IsEmailExists(string Email,AdminID adminId)
+    {
+        
+        return this.DbContext.Admins.Any(x => x.Email.Equals(Email)&&x.Id!=adminId);
+        
+    }
     public Domain.Entities.Manager.Admin.Admin GetByEmail(string Email)
     {
 
@@ -105,6 +119,63 @@ public class AdminRepository:GenericRepository<Domain.Entities.Manager.Admin.Adm
 
     }
 
+
+    public bool Add(string Email, string Password, RoleID roleId, string Name)
+    {
+
+        var Admin = new Domain.Entities.Manager.Admin.Admin()
+        {
+
+            Email = Email,
+            Password = Password,
+            Name = Name,
+            RoleId = roleId
+        };
+        DbContext.Admins.Add(Admin);
+        DbContext.SaveChanges();
+        return true;
+
+    }
+
+    public bool IsExists(AdminID Id)
+    {
+
+        return DbContext.Admins.Any(x => x.Id == Id&& x.Name.Equals(RoleEnum.SuperAdmin.ToString()));
+
+    }
+
+    public bool Update(AdminID Id, string Email, string Password, RoleID roleId, string Name)
+    {
+        
+        
+        var Admin = new Domain.Entities.Manager.Admin.Admin()
+        {
+
+            Email = Email,
+            Password = Password,
+            Name = Name,
+            RoleId = roleId,
+            Id = Id
+        };
+        DbContext.Admins.Update(Admin);
+        DbContext.SaveChanges();
+        return true;
+
+    }
+
+    public PageList<GetAllAdmin> GetAlladmin(string? OrderBy, int? pageNumber, int? pageSize)
+    {
+        
+        var Result = DbContext.Admins
+            .Where(x=>!x.Name.Equals(RoleEnum.SuperAdmin.ToString()))
+            .Sort<AdminID,Domain.Entities.Manager.Admin.Admin>(OrderBy, AdminSorting.switchOrdering)
+            .Select(AdminQuery.ToGetAllAdmin)
+            .ToPagedList(pageNumber,pageSize);
+        return Result;
+
+        
+        
+    }
 
     
 }

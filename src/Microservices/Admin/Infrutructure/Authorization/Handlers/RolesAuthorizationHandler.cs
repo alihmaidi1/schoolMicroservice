@@ -1,5 +1,8 @@
+using System.Security.Claims;
+using Domain.Entities.Manager.Admin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
+using Microsoft.AspNetCore.Http;
 
 namespace Infrutructure.Authorization.Handlers;
 
@@ -8,8 +11,13 @@ public class RolesAuthorizationHandler:AuthorizationHandler<RolesAuthorizationRe
     
     public ApplicationDbContext DBContext;
 
-    public RolesAuthorizationHandler(ApplicationDbContext DBContext) { 
-        
+    private IHttpContextAccessor _httpContextAccessor;
+    
+    
+    public RolesAuthorizationHandler(IHttpContextAccessor _httpContextAccessor,ApplicationDbContext DBContext)
+    {
+
+        this._httpContextAccessor = _httpContextAccessor;
         this.DBContext = DBContext; 
     }
     protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, RolesAuthorizationRequirement requirement)
@@ -24,8 +32,9 @@ public class RolesAuthorizationHandler:AuthorizationHandler<RolesAuthorizationRe
         }
         
         var Roles = requirement.AllowedRoles;
+        var Id = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.NameIdentifier)).Value;
 
-        var roleName = DBContext.Admins.Select(x => x.Role.Name).SingleOrDefault();
+        var roleName = DBContext.Admins.Where(x=>x.Id==new Guid(Id)).Select(x => x.Role.Name).SingleOrDefault();
         if (Roles.Any(x => x.Equals(roleName)))
         {
             

@@ -16,7 +16,7 @@ public class ForgetPasswordValidation:AbstractValidator<ForgetPasswordCommand>
             .NotNull()
             .WithMessage("email should be not null")
             .Must(x => AdminRepository.IsEmailExists(x))
-            .WithMessage("email should be email address");
+            .WithMessage("email address is already exists");
 
     }
 
