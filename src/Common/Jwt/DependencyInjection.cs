@@ -14,18 +14,13 @@ public static class DependencyInjection
     public static IServiceCollection AddJwtConfigration(this IServiceCollection services, IConfiguration Configuration,string main,params string[] schemas)
     {
         
-        
-        
 
         var Authentication=services.AddAuthentication(options =>
         {
-
-
-
+            
             options.DefaultAuthenticateScheme = main;
             options.DefaultChallengeScheme = main;
             options.DefaultScheme = main;
-            
             
         });
 
@@ -37,6 +32,7 @@ public static class DependencyInjection
 
             Authentication.AddJwtBearer(SchmeaName.ToString(), options =>
             {
+                // options.Authority="asfsd"
                 options.SaveToken = true;
                 options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {

@@ -1,3 +1,4 @@
+using Common.Jwt;
 using Common.OperationResult;
 using Domain.Entities.Manager.Admin;
 using Domain.Enum;
@@ -9,9 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Model.Manager.Auth.Command;
 using Repository.Manager.Admin;
-using Repository.Manager.Jwt;
 using Repository.Manager.Jwt.Factory;
-
+using Service.Manager.Auth;
+using Adminentity=Domain.Entities.Manager.Admin.Admin;
 namespace Admin.Manager.Auth.Command.Handler;
 
 public class AuthCommandHandler:OperationResult,
@@ -30,8 +31,10 @@ public class AuthCommandHandler:OperationResult,
 
     private IAdminRepository AdminRepository;
 
-    public AuthCommandHandler(IHttpContextAccessor _httpContextAccessor,ISchemaFactory schemaFactory,IAdminRepository AdminRepository,ApplicationDbContext DbContext)
+    private IAuthService AuthService;
+    public AuthCommandHandler(IAuthService AuthService,IHttpContextAccessor _httpContextAccessor,ISchemaFactory schemaFactory,IAdminRepository AdminRepository,ApplicationDbContext DbContext)
     {
+        this.AuthService = AuthService;
         this._httpContextAccessor = _httpContextAccessor;
         this.jwtRepository = schemaFactory.CreateJwt(JwtSchema.JwtAdmin);
         this.DbContext = DbContext;
@@ -42,20 +45,42 @@ public class AuthCommandHandler:OperationResult,
     
     public async Task<JsonResult> Handle(LoginAdminCommand request, CancellationToken cancellationToken)
     {
-        Domain.Entities.Manager.Admin.Admin admin = this.AdminRepository.GetByEmail(request.Email);
+
+        Adminentity admin = DbContext.Admins
+            .Include(x=>x.Role)
+            .Select(x=>new Adminentity()
+            {
+                Id = x.Id,
+                Email = x.Email,
+                Role = x.Role,
+                Password = x.Password
+                
+            })
+            .First(x => x.Email.Equals(request.Email));
         
         if (admin.Password.Equals(request.Password))
         {
-            var tokens = await jwtRepository.GetTokensInfo(admin.Id,admin.Email);
-            AdminRefreshToken adminRefreshToken = tokens.refreshToken;
-             admin.RefreshTokens.Add(adminRefreshToken);
+            Dictionary<string, string> Permissions = admin.Role.Permissions.ToDictionary(x => x, x => x);
+            Permissions.Add("role",admin.Role.Name);
+                
+            
+            var tokens =  jwtRepository.GetTokensInfo(admin.Id,admin.Email,Permissions);
+            string adminRefreshToken = tokens.refreshToken;
+             DbContext.AdminRefreshTokens.Add(new AdminRefreshToken()
+             {
+                 
+                 Token = adminRefreshToken,
+                 ExpireAt = DateTime.UtcNow.AddDays(30),
+                 AdminId = admin.Id
+                 
+             });
              DbContext.SaveChanges();
-
-             TokenDto TokenInfo = TokenDto.ToTokenDto(tokens.token, tokens.ExpiredAt, tokens.refreshToken.Token);
-
+        
+             TokenDto TokenInfo = TokenDto.ToTokenDto(tokens.token, tokens.ExpiredAt, tokens.refreshToken);
+        
             return Success(TokenInfo,"You are login successfully");
         }
-
+        
         return Fail("password is not correct");
 
     }
@@ -73,18 +98,29 @@ public class AuthCommandHandler:OperationResult,
     {
         AdminRefreshToken? RefreshToken =  DbContext.AdminRefreshTokens
             .Include(x => x.Admin)
+            .ThenInclude(x=>x.Role)
             .Select(x=>new AdminRefreshToken()
             {
                 Id = x.Id,
                 ExpireAt = x.ExpireAt,
-                Admin = x.Admin,
-                Token = x.Token
+                Admin = new Adminentity()
+                {
+                    Id = x.Admin.Id,
+                    Role = x.Admin.Role,
+                    Email = x.Admin.Email,
+                    
+                },
+                Token = x.Token,
+                
                 
             })
             .FirstOrDefault(x => x.Token.Equals(request.RefreshToken));
         DbContext.AdminRefreshTokens.Remove(RefreshToken);
-        var TokensData = await this.jwtRepository.GetTokensInfo(RefreshToken.Admin.Id,RefreshToken.Admin.Email);
-        TokenDto TokenInfo = TokenDto.ToTokenDto(TokensData.token,TokensData.ExpiredAt,TokensData.refreshToken.Token);
+        Dictionary<string,string> permissions = RefreshToken.Admin.Role.Permissions.ToDictionary(x=>x,x=>x);
+        
+        permissions.Add("role",RefreshToken.Admin.Role.Name);
+        var TokensData =  this.jwtRepository.GetTokensInfo(RefreshToken.Admin.Id,RefreshToken.Admin.Email,permissions);
+        TokenDto TokenInfo = TokenDto.ToTokenDto(TokensData.token,TokensData.ExpiredAt,TokensData.refreshToken);
         return Success(TokenInfo);
 
 

@@ -1,12 +1,11 @@
-using Infrutructure.Authorization.Requirements;
+using Common.Authorization.Requirements;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 
-namespace Infrutructure.Authorization.Providers;
+namespace Common.Authorization.Providers;
 
 public class PermissionProvider:IAuthorizationPolicyProvider
 {
-    
     
     public DefaultAuthorizationPolicyProvider DefaultAuthorizationPolicyProvider;
         

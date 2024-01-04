@@ -2,64 +2,52 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using Common.Jwt;
 using Common.Redis;
-using Domain.Entities.Manager.Admin;
-using Infrutructure;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Repository.Manager.Jwt;
+namespace Common.Jwt;
 
 public class JwtRepository:IJwtRepository
 {
     
-    public readonly JwtSetting JwtOption;
-    public readonly ApplicationDbContext Context; 
-
-    public readonly ICacheRepository CacheRepository;
-
-    public JwtRepository(JwtSetting  Setting, ApplicationDbContext DbContext, ICacheRepository cacheRepository)
+    private readonly JwtSetting JwtOption;
+    private readonly ICacheRepository CacheRepository;
+    
+    public JwtRepository(JwtSetting  JwtOption,ICacheRepository cacheRepository)
     {
 
-        
-        this.Context = DbContext;
+        this.JwtOption = JwtOption;
         this.CacheRepository = cacheRepository;
-        this.JwtOption = Setting;
 
     }
     
-    
-     public  async Task<(AdminRefreshToken refreshToken,string token,int ExpiredAt)> GetTokensInfo(Guid Id,string Email)  
+    public (string refreshToken, string token, int ExpiredAt) GetTokensInfo(Guid Id, string Email,Dictionary<string,string>? Claims=null)
     {
-        
-        
-        string Token = GetToken(Id,Email);
-        AdminRefreshToken RefreshToken = GenerateRefreshToken();
+        string Token = GetToken(Id,Email,Claims);
+        string RefreshToken = GenerateRefreshToken();
         return (RefreshToken, Token,(int )JwtOption.DurationInMinute * 60);
 
     }
 
     
-    
-    
-    
-    public string GetToken(Guid Id,string Email)
+    public string GetToken(Guid Id, string Email, Dictionary<string,string>? Claims)
     {
-        var claims = CreateClaim(Id,Email);
+        
+        var claims = CreateClaim(Id,Email,Claims);
         var signingCredentials = GetSigningCredentials(JwtOption);
         var JwtToken = GetJwtToken(JwtOption, claims, signingCredentials);
         var Token = new JwtSecurityTokenHandler().WriteToken(JwtToken);
         var ExpiredAt = DateTimeOffset.Now.AddMinutes(JwtOption.DurationInMinute);
-        this.CacheRepository.SetData("Token:" + Token, Token, ExpiredAt);
+        CacheRepository.SetData("Token:" + Token, Token, ExpiredAt);
         return Token;
 
-        
     }
     
     
-    private List<Claim> CreateClaim(Guid Id,string Email)
+    
+    private List<Claim> CreateClaim(Guid Id,string Email,Dictionary<string,string> ListClaims=null)
     {
+
 
         var Claims = new List<Claim>
         {
@@ -68,10 +56,21 @@ public class JwtRepository:IJwtRepository
 
         };
 
+        if (ListClaims is not null)
+        {
+       
+            foreach (var claim in ListClaims)
+            {
+            
+                Claims.Add(new Claim(claim.Key,claim.Value));
+            
+            }
 
+            
+        }
+        
         return Claims;
-
-
+        
 
     }
     
@@ -99,29 +98,15 @@ public class JwtRepository:IJwtRepository
     }
 
     
-    private AdminRefreshToken GenerateRefreshToken()
+    private string GenerateRefreshToken()
     {
 
         var RandomNumber = new byte[32];
         var generator = new RNGCryptoServiceProvider();
         generator.GetBytes(RandomNumber);
 
-
-        return new AdminRefreshToken()
-        {
-            Token = Convert.ToBase64String(RandomNumber),
-            ExpireAt = DateTime.UtcNow.AddDays(30),
-
-        };
+        return Convert.ToBase64String(RandomNumber);
 
     }
-
-    
-    
-    
-    
-    
-    
-   
 
 }

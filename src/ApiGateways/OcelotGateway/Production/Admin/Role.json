@@ -27,11 +27,7 @@
       "UpstreamHttpMethod": [ "Post","Put","Delete","Get" ],
       "SwaggerKey": "Admin"
     }
-  ],
-
-
-
-  "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:5005"
-  }
+  ]
+  
+  
 }

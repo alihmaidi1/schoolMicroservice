@@ -19,12 +19,9 @@ public static class dependencyInjection
         services.AddHangfireServer();
         services.AddTransient<ICacheRepository,CacheRepository>();
         services.AddTransient<IAdminRepository,AdminRepository>();
-        // services.AddTransient<IJwtRepository,JwtRepository>();
         services.AddTransient<IMailService, MailService>();
         services.AddTransient<ISchemaFactory, SchemaFactory>();
         services.AddTransient<IRoleRepository,RoleRepository>();
-        // services.AddTransient<IAdminRefreshTokenRepository,AdminRefreshTokenRepository>();
-
         return services;
 
         

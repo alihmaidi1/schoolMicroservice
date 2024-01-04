@@ -28,8 +28,7 @@ public class SchemaFactory:ISchemaFactory
     
     public IJwtRepository CreateJwt(JwtSchema Schema)
     {
-        
         var Setting=configuration.GetSection(Schema.ToString()).Get<JwtSetting>();
-        return new JwtRepository(Setting, DbContext, this.cacheRepository);
+        return new JwtRepository(Setting,this.cacheRepository);
     }
 }

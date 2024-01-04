@@ -84,3 +84,11 @@
       - "5006:80"
     depends_on:
       - adminapi
+
+  jaeger:
+    image: jaegertracing/all-in-one
+    container_name: jaeger
+    restart: always
+    ports:
+      - "16686:16686"
+      - "4317:4317"

@@ -1,0 +1,18 @@
+
+{
+
+  "SwaggerEndPoints": [
+    {
+
+      "Key": "Admin",
+      "Config": [{
+
+        "Name": "Admin Documentation microservice",
+        "Version": "v1",
+        "Url": "http://localhost:5109/swagger/admin/swagger.json"
+
+
+      }]
+    }
+  ]
+}

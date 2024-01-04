@@ -22,7 +22,9 @@ public class AdminConfigration:IEntityTypeConfiguration<Admin>
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasMany(x => x.RefreshTokens)
-            .WithOne(x => x.Admin).OnDelete(DeleteBehavior.Cascade);
+            .WithOne(x => x.Admin)
+            .HasForeignKey(x=>x.AdminId)
+            .OnDelete(DeleteBehavior.Cascade);
 
     }
 }

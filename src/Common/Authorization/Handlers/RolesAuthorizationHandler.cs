@@ -1,43 +1,34 @@
-using System.Security.Claims;
-using Domain.Entities.Manager.Admin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Http;
 
-namespace Infrutructure.Authorization.Handlers;
+namespace Common.Authorization.Handlers;
 
 public class RolesAuthorizationHandler:AuthorizationHandler<RolesAuthorizationRequirement>
 {
     
-    public ApplicationDbContext DBContext;
-
     private IHttpContextAccessor _httpContextAccessor;
-    
-    
-    public RolesAuthorizationHandler(IHttpContextAccessor _httpContextAccessor,ApplicationDbContext DBContext)
+
+    public RolesAuthorizationHandler(IHttpContextAccessor _httpContextAccessor)
     {
 
         this._httpContextAccessor = _httpContextAccessor;
-        this.DBContext = DBContext; 
+
     }
+    
+    
     protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, RolesAuthorizationRequirement requirement)
     {
-
-        
         if (context.User==null||context.User?.Identity?.IsAuthenticated==false)
         {
-             context.Fail();
-            
-
+            context.Fail();
         }
-        
         var Roles = requirement.AllowedRoles;
-        var Id = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.NameIdentifier)).Value;
-
-        var roleName = DBContext.Admins.Where(x=>x.Id==new Guid(Id)).Select(x => x.Role.Name).SingleOrDefault();
-        if (Roles.Any(x => x.Equals(roleName)))
+        
+        var role = _httpContextAccessor.HttpContext.User.Claims.Any(x => x.Type.Equals("role")&&Roles.Any(role=>role.Equals(x)));
+        
+        if (role)
         {
-            
             context.Succeed(requirement);
         }
         else
@@ -46,7 +37,7 @@ public class RolesAuthorizationHandler:AuthorizationHandler<RolesAuthorizationRe
             context.Fail();
         }
 
-
+        context.Succeed(requirement);
 
     }
 }

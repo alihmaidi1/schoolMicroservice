@@ -2,6 +2,7 @@ using Common.Api;
 using Domain.AppMetaData.Manager;
 using Domain.Attributes;
 using Domain.Enum;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Model.Manager.Admin.Command;
 using Model.Manager.Admin.Query;
@@ -10,7 +11,8 @@ using Model.Manager.Auth.Command;
 namespace Api.Controllers.Manager;
 
 
-[AppAuthorize(Roles = nameof(RoleEnum.SuperAdmin))]
+// [AppAuthorize(Roles = nameof(RoleEnum.SuperAdmin))]
+[Authorize]
 public class AdminController:ApiController
 {
     

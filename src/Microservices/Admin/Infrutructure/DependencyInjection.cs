@@ -1,6 +1,5 @@
-using Infrutructure.Authorization.Handlers;
-using Infrutructure.Authorization.Providers;
-using Infrutructure.Authorization.Requirements;
+using Common.Authorization.Handlers;
+using Common.Authorization.Providers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
