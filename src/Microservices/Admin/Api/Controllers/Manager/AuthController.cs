@@ -1,5 +1,5 @@
 using Common.Api;
-using Domain.Attributes;
+using Common.Attributes;
 using Microsoft.AspNetCore.Mvc;
 using Model.Manager.Auth.Command;
 

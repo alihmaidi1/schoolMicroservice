@@ -1,6 +1,7 @@
 using Common.Api;
+using Common.Attributes;
+using Common.Enum;
 using Domain.AppMetaData.Manager;
-using Domain.Attributes;
 using Domain.Enum;
 using Dto.Manager.Role;
 using Microsoft.AspNetCore.Mvc;

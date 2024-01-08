@@ -1,4 +1,4 @@
-using Domain.Base.ValueObject;
+using Common.Entity.ValueObject;
 
 namespace Domain.Entities.Manager.Role;
 

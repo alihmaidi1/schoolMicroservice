@@ -26,7 +26,6 @@ public class JwtRepository:IJwtRepository
         string Token = GetToken(Id,Email,Claims);
         string RefreshToken = GenerateRefreshToken();
         return (RefreshToken, Token,(int )JwtOption.DurationInMinute * 60);
-
     }
 
     

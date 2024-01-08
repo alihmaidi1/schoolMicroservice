@@ -1,8 +1,10 @@
 using System.Security.Claims;
 using Common.Email;
-using Common.EntityOperation;
+using Common.Entity.EntityOperation;
+using Common.Enum;
 using Common.ExtensionMethod;
 using Common.Redis;
+using Common.Repository;
 using Domain.Entities.Manager.Admin;
 using Domain.Entities.Manager.Role;
 using Domain.Enum;

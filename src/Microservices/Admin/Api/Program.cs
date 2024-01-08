@@ -33,7 +33,7 @@ builder.Services.AddHealthChecks()
 
 if (!Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT").Equals("Development"))
 {
-    builder.Services.AddteleMetry();
+    builder.Services.AddteleMetry(builder.Configuration);
     builder.Host.AddElasticSearchLogging();
 }
 

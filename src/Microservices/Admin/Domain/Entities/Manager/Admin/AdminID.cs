@@ -1,5 +1,4 @@
-using Domain.Base.ValueObject;
-
+using Common.Entity.ValueObject;
 namespace Domain.Entities.Manager.Admin;
 
 public class AdminID:StronglyTypeId

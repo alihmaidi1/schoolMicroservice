@@ -1,4 +1,4 @@
-using Common.EntityOperation;
+using Common.Entity.EntityOperation;
 using Domain.Entities.Manager.Admin;
 using Domain.Entities.Manager.Role;
 using Dto.Manager.Admin;

@@ -1,5 +1,5 @@
 using Api;
-using Domain.Base.Entity;
+using Common.Entity.Entity;
 using Domain.Entities.Manager.Role;
 using EntityFrameworkCore.EncryptColumn.Attribute;
 

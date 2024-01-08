@@ -1,6 +1,5 @@
 using Common.Api;
 using Domain.AppMetaData.Manager;
-using Domain.Attributes;
 using Domain.Enum;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
