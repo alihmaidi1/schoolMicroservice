@@ -8,7 +8,9 @@ public class PageList<T>
     public PageList(List<T> items,  long count, int? pageNumber=1, int ?pageSize=null)
     {
 
+        
         TotalCount = count;
+        
         PageSize = pageSize==null?(count==0)?1:(int?)count:pageSize;
         CurrentPage = pageNumber;
         Data    = items;

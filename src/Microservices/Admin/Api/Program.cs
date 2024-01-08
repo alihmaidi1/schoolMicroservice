@@ -4,6 +4,7 @@ using Common.Api;
 using Common.Authorization.Handlers;
 using Common.ElasticSearch;
 using Common.Email;
+using Common.Enum;
 using Common.Jwt;
 using Common.Opentelemetry;
 using Common.Swagger;
@@ -31,6 +32,8 @@ builder.Services.AddHealthChecks()
     .AddHangfire(null);
 
 
+
+
 if (!Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT").Equals("Development"))
 {
     builder.Services.AddteleMetry(builder.Configuration);
@@ -50,8 +53,9 @@ builder.Services.AddInfrustucture(builder.Configuration);
 
 builder.Services.AddRepository(builder.Configuration);
 
-
 builder.Services.AddAdmindependency();
+
+
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddJwtConfigration(builder.Configuration,JwtSchema.JwtAdmin.ToString(),JwtSchema.JwtAdmin.ToString(),JwtSchema.JwtResetAdmin.ToString());
 
@@ -79,6 +83,8 @@ if (!app.Environment.IsDevelopment())
 // Configure the HTTP request pipeline.
 // if (app.Environment.IsDevelopment())
 // {
+
+
     using(var scope= app.Services.CreateScope()){
         await DatabaseSeed.InitializeAsync(scope.ServiceProvider);
     }

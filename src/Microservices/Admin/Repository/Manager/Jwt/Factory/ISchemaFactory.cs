@@ -1,3 +1,4 @@
+using Common.Enum;
 using Common.Jwt;
 using Domain.Enum;
 

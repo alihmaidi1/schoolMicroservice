@@ -32,7 +32,7 @@ public static class DependencyInjection
 
             Authentication.AddJwtBearer(SchmeaName.ToString(), options =>
             {
-                // options.Authority="asfsd"
+                // options.Authority = "asfsd";
                 options.SaveToken = true;
                 options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {

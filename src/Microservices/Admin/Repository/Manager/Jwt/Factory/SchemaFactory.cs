@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Common.Enum;
 using Common.Jwt;
 using Common.Redis;
 using Domain.Enum;

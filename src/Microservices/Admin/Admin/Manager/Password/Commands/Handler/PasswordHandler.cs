@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Common.Enum;
 using Common.Jwt;
 using Common.OperationResult;
 using Domain.Enum;
