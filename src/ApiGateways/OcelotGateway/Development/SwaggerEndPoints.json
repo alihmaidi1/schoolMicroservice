@@ -9,7 +9,19 @@
 
         "Name": "Admin Documentation microservice",
         "Version": "v1",
-        "Url": "http://localhost:5109/swagger/admin/swagger.json"
+        "Url": "http://localhost:5109/swagger/admin/swagger.json",
+
+        
+      }]
+    },
+    {
+
+      "Key": "Teacher",
+      "Config": [{
+
+        "Name": "Teacher Documentation microservice",
+        "Version": "v1",
+        "Url": "http://localhost:5226/swagger/teacher/swagger.json"
 
 
       }]

@@ -14,8 +14,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Domain\Domain.csproj" />
-      <ProjectReference Include="..\infrutructure\infrutructure.csproj" />
+      <ProjectReference Include="..\TeacherDomain\TeacherDomain.csproj" />
+      <ProjectReference Include="..\TeacherInfrutructure\TeacherInfrutructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Teacher\Command\" />
     </ItemGroup>
 
 

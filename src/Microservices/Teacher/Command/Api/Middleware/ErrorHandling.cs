@@ -1,5 +1,6 @@
 using Common.ExtensionMethod;
 using infrutructure;
+using Teacherinfrutructure;
 
 namespace Api.Middleware;
 

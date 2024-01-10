@@ -1,8 +1,8 @@
 using Domain.Repository.Base;
 using infrutructure;
-using Infrutructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Teacherinfrutructure;
 
 namespace Repository.Base;
 

@@ -22,7 +22,7 @@ namespace Infrutructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.Entities.Manager.Admin.Admin", b =>
+            modelBuilder.Entity("TeacherDomain.Entities.Manager.Admin.Admin", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -70,7 +70,7 @@ namespace Infrutructure.Migrations
                     b.ToTable("Admins");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Manager.Admin.AdminRefreshToken", b =>
+            modelBuilder.Entity("TeacherDomain.Entities.Manager.Admin.AdminRefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -93,7 +93,7 @@ namespace Infrutructure.Migrations
                     b.ToTable("AdminRefreshTokens");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Manager.Role.Role", b =>
+            modelBuilder.Entity("TeacherDomain.Entities.Manager.Role.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -129,9 +129,9 @@ namespace Infrutructure.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Manager.Admin.Admin", b =>
+            modelBuilder.Entity("TeacherDomain.Entities.Manager.Admin.Admin", b =>
                 {
-                    b.HasOne("Domain.Entities.Manager.Role.Role", "Role")
+                    b.HasOne("TeacherDomain.Entities.Manager.Role.Role", "Role")
                         .WithMany("Admins")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -140,9 +140,9 @@ namespace Infrutructure.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Manager.Admin.AdminRefreshToken", b =>
+            modelBuilder.Entity("TeacherDomain.Entities.Manager.Admin.AdminRefreshToken", b =>
                 {
-                    b.HasOne("Domain.Entities.Manager.Admin.Admin", "Admin")
+                    b.HasOne("TeacherDomain.Entities.Manager.Admin.Admin", "Admin")
                         .WithMany("RefreshTokens")
                         .HasForeignKey("AdminId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -151,12 +151,12 @@ namespace Infrutructure.Migrations
                     b.Navigation("Admin");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Manager.Admin.Admin", b =>
+            modelBuilder.Entity("TeacherDomain.Entities.Manager.Admin.Admin", b =>
                 {
                     b.Navigation("RefreshTokens");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Manager.Role.Role", b =>
+            modelBuilder.Entity("TeacherDomain.Entities.Manager.Role.Role", b =>
                 {
                     b.Navigation("Admins");
                 });

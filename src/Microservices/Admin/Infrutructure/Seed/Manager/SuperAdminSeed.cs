@@ -27,10 +27,11 @@ public static class SuperAdminSeed
                 Name =RoleEnum.SuperAdmin.ToString(),
                 Email = "alihmaidi095@gmail.com",
                 Password = "12345678",
-                Role = role
-
+                Role = role,
+                Id = new Guid("f1cfc8cb-df51-425c-a37c-db1db5519127")
             };
-
+            
+            
             context.Admins.Add(SuperAdmin);
             context.SaveChanges();
 

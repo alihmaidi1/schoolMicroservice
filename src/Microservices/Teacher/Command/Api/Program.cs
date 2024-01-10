@@ -11,13 +11,13 @@ using Domain.Repository;
 using Hangfire;
 using HealthChecks.UI.Client;
 using infrutructure;
-using Infrutructure.Seed;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Repository;
 using Teacher;
+using Teacherinfrutructure;
+using Teacherinfrutructure.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
 
