@@ -31,7 +31,7 @@ public interface IAdminRepository:IgenericRepository<Domain.Entities.Manager.Adm
 
 
 
-    public bool Add(string Email,string Password,RoleID roleId,string Name);
+    public bool Add(Guid id,string Email,string Password,RoleID roleId,string Name);
 
     public bool Update(AdminID Id, string Email,string Password,RoleID roleId,string Name);
 

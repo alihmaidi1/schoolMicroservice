@@ -10,6 +10,9 @@ public static class dependencyInjection
     {
      
         services.AddTransient<ITeacherRepository, TeacherRepository>();
+        services.AddTransient<IManagerRepository, ManagerRepository>();
+
+        
         return services;
 
     }

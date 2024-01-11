@@ -11,7 +11,7 @@ using Model.Manager.Role.Query;
 namespace Api.Controllers.Manager;
 
 
-[AppAuthorize(Roles = nameof(RoleEnum.SuperAdmin))]
+// [AppAuthorize(Roles = nameof(RoleEnum.SuperAdmin))]
 public class RoleController:ApiController
 {
     

@@ -53,7 +53,10 @@ builder.Services.AddInfrustucture(builder.Configuration);
 
 builder.Services.AddRepository(builder.Configuration);
 
-builder.Services.AddAdmindependency();
+
+
+
+builder.Services.AddAdmindependency(builder.Configuration);
 
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

@@ -122,12 +122,13 @@ public class AdminRepository:GenericRepository<Domain.Entities.Manager.Admin.Adm
     }
 
 
-    public bool Add(string Email, string Password, RoleID roleId, string Name)
+    public bool Add(Guid id,string Email, string Password, RoleID roleId, string Name)
     {
 
         var Admin = new Domain.Entities.Manager.Admin.Admin()
         {
 
+            Id = id,
             Email = Email,
             Password = Password,
             Name = Name,

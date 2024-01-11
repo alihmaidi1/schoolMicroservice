@@ -14,6 +14,10 @@
       sqlserver:
         condition: service_healthy
         restart: true
+        
+      rabbitmq:
+        condition: service_started
+        restart: true
     ports:
       - "5000:80"
   ocelotgateway:
@@ -116,6 +120,10 @@
       sqlserver:
         condition: service_healthy
         restart: true
+      rabbitmq:
+        condition: service_started
+        restart: true
+        
     
     ports:
       - "5004:80"

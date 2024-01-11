@@ -1,5 +1,7 @@
 using Common.Email;
 using Common.OperationResult;
+using Common.Rabbitmq.Events.Admin;
+using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Model.Manager.Admin.Command;
@@ -17,9 +19,11 @@ public class AdminCommandHandler:OperationResult,
 
     private IMailService MailService;
 
+    private IPublishEndpoint _publisher;
     private IAdminRepository AdminRepository;
-    public AdminCommandHandler(IAdminRepository AdminRepository,IMailService MailService)
+    public AdminCommandHandler(IPublishEndpoint _publisher,IAdminRepository AdminRepository,IMailService MailService)
     {
+        this._publisher = _publisher;
         this.AdminRepository = AdminRepository;
         this.MailService = MailService;
 
@@ -27,11 +31,19 @@ public class AdminCommandHandler:OperationResult,
     
     public  async Task<JsonResult> Handle(AddAdminCommand request, CancellationToken cancellationToken)
     {
-
-
+        
+        var id = Guid.NewGuid();
          MailService.SendMail(request.Email, "new Admin In School",
             $"You Are New Manager In School and this is your password {request.Password}");
-         AdminRepository.Add(request.Email, request.Password, request.RoleId, request.Name);
+         AdminRepository.Add(id,request.Email, request.Password, request.RoleId, request.Name);
+
+         AddAdminEvent addAdminEvent = new AddAdminEvent()
+         {
+             Id = id,
+             Name = request.Name
+         };
+         
+         await _publisher.Publish(addAdminEvent); 
          return Success("admin was added successfully");
         
     }

@@ -24,6 +24,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+builder.Services.AddTeacher(builder.Configuration);
 
 
 builder.Services.AddHangfire(x => x.UseSqlServerStorage(builder.Configuration["ConnectionStrings:DefaultConnection"]));
@@ -51,7 +52,6 @@ builder.Services.AddHealthChecks()
      builder.Services.AddScoped<IAuthorizationHandler,RolesAuthorizationHandler>();
      builder.Services.AddInfrustucture(builder.Configuration);
      builder.Services.AddRepository();
-     builder.Services.AddTeacher();
      builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
      builder.Services.AddJwtConfigration(builder.Configuration,JwtSchema.JwtTeacher.ToString(),JwtSchema.JwtTeacher.ToString(),JwtSchema.JwtAdmin.ToString());
 
