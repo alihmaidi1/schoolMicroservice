@@ -1,4 +1,6 @@
 using System.Reflection;
+using Class.Repository.Stage;
+using Class.Repository.Year;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,9 +11,10 @@ public static class DependencyInjection
     
     public static IServiceCollection AddRepository(this IServiceCollection services)
     {
-        
-        
-        
+
+
+        services.AddTransient<IStageRepository,StageRepository>();
+        services.AddTransient<IYearRepository,YearRepository>();
         return services;
 
         

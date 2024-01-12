@@ -19,6 +19,7 @@ public static class ClassDatabasebSeed
 
 
             await StageSeeder.seedData(context);
+            await YearSeeder.seedData(context);
             await transaction.CommitAsync();
 
 

@@ -1,6 +1,7 @@
 using System.Reflection;
 using ClassDomain.Entities.Class;
 using ClassDomain.Entities.Stage;
+using ClassDomain.Entities.Year;
 using EntityFrameworkCore.EncryptColumn.Extension;
 using EntityFrameworkCore.EncryptColumn.Interfaces;
 using EntityFrameworkCore.EncryptColumn.Util;
@@ -35,6 +36,7 @@ public class ApplicationDbContext:DbContext
     public DbSet<Stage> Stages { get; set; }
 
     public DbSet<Class> Classes { get; set; }
-    
+
+    public DbSet<Year> Years { get; set; }
     
 }

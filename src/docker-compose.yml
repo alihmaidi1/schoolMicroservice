@@ -135,3 +135,25 @@
     ports:
       - "5672:5672"
       - "15672:15672"
+  classapi:
+    image: alihmaidi/classapi
+    container_name: classapi
+    build:
+      context: .
+      dockerfile: Microservices/Class/Api/Dockerfile
+
+    ports:
+      - "5001:80"
+    
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    depends_on:
+      redis:
+        condition: service_started
+        restart: true
+      sqlserver:
+        condition: service_healthy
+        restart: true
+      rabbitmq:
+        condition: service_started
+        restart: true

@@ -4,6 +4,7 @@
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
@@ -22,6 +23,12 @@
       <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="8.0.0" />
       <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="8.0.0" />
       <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="8.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 
 </Project>

@@ -17,7 +17,8 @@ public static class DatabaseSeed
         try
         {
 
-            
+
+            await YearSeeder.seedData(context);
             await transaction.CommitAsync();
 
 
