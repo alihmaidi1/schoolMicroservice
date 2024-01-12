@@ -1,3 +1,4 @@
+using Domain.Repository.Warning;
 using Microsoft.Extensions.DependencyInjection;
 using Repository.Teacher;
 using Teacher.Repository.Teacher;
@@ -12,6 +13,7 @@ public static class dependencyInjection
         services.AddTransient<ITeacherRepository, TeacherRepository>();
         services.AddTransient<IManagerRepository, ManagerRepository>();
 
+        services.AddTransient<IWarningRepository, WarningRepository>();
         
         return services;
 

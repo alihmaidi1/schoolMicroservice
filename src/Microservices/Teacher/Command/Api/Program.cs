@@ -6,6 +6,7 @@ using Common.Email;
 using Common.Enum;
 using Common.Jwt;
 using Common.Opentelemetry;
+using Common.Redis;
 using Common.Swagger;
 using Domain.Repository;
 using Hangfire;
@@ -26,6 +27,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 builder.Services.AddTeacher(builder.Configuration);
 
+builder.Services.AddTransient<ICacheRepository,CacheRepository>();
 
 builder.Services.AddHangfire(x => x.UseSqlServerStorage(builder.Configuration["ConnectionStrings:DefaultConnection"]));
 builder.Services.AddHangfireServer();

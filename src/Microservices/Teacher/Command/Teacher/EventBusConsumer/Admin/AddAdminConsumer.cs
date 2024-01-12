@@ -20,9 +20,9 @@ public class AddAdminConsumer:IConsumer<AddAdminEvent>
 
         var Manager = new Manager()
         {
-            Id = context.Message.Id,
+            
+            ManagerId = context.Message.Id,
             Name = context.Message.Name
-
         };
         await ManagerRepository.AddAsync(Manager);
         

@@ -1,0 +1,40 @@
+using System.Reflection;
+using ClassDomain.Entities.Class;
+using ClassDomain.Entities.Stage;
+using EntityFrameworkCore.EncryptColumn.Extension;
+using EntityFrameworkCore.EncryptColumn.Interfaces;
+using EntityFrameworkCore.EncryptColumn.Util;
+using Microsoft.EntityFrameworkCore;
+
+namespace ClassInfrutructure;
+
+public class ApplicationDbContext:DbContext
+{
+ 
+    public IEncryptionProvider EncryptionProvider { get; set; }
+
+    
+    public ApplicationDbContext(DbContextOptions option) :base(option)
+    {
+
+        EncryptionProvider = new GenerateEncryptionProvider("45sdfow3sdfsd42joir53");
+            
+
+    }
+    
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    
+        builder.UseEncryption(EncryptionProvider);
+        base.OnModelCreating(builder);
+    
+    }
+
+
+    public DbSet<Stage> Stages { get; set; }
+
+    public DbSet<Class> Classes { get; set; }
+    
+    
+}

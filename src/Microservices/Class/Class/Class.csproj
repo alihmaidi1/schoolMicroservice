@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.EntityFrameworkCore">
+        <HintPath>..\..\..\..\..\..\.nuget\packages\microsoft.entityframeworkcore\7.0.9\lib\net6.0\Microsoft.EntityFrameworkCore.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ClassInfrutructure\ClassInfrutructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FluentValidation" Version="11.9.0" />
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.0" />
+      <PackageReference Include="Hangfire" Version="1.8.7" />
+      <PackageReference Include="MediatR" Version="12.2.0" />
+    </ItemGroup>
+
+</Project>

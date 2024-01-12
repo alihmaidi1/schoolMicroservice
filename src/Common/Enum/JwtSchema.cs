@@ -4,7 +4,9 @@ public enum JwtSchema
 {
     JwtAdmin,
     JwtResetAdmin,
-    JwtTeacher
+    JwtTeacher,
+    JwtStudent,
+    JwtParent
 
     
 }

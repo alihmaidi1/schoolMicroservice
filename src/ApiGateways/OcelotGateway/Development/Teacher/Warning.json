@@ -1,0 +1,22 @@
+{
+
+  "Routes": [
+
+    {
+      "DownstreamPathTemplate": "/api/v1/warning",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5226
+        }
+      ],
+      "UpstreamPathTemplate": "/api/v1/warning",
+      "UpstreamHttpMethod": [ "Post","Delete" ],
+      "SwaggerKey": "Teacher"
+    }
+
+  ]
+
+
+}
