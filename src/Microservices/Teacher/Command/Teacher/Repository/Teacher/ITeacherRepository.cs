@@ -1,4 +1,5 @@
 using Common.Entity.EntityOperation;
+using Domain.Dto.Teacher;
 using Domain.Entities.Teacher;
 using Domain.Model.Teacher.Query;
 using Domain.Repository.Base;
@@ -21,6 +22,10 @@ public interface ITeacherRepository:IgenericRepository<Domain.Entities.Teacher.T
 
     public bool UpdateTeacher(TeacherID Id,string Name,string Email,string Password);
 
+    public GetTeacherResponse GetTeacher(TeacherID Id );
+    
+    public bool Delete(TeacherID Id);
+    
     public PageList<Domain.Dto.Teacher.GetAllTeacher> GetAllTecher(string? OrderBy, int? pageNumber, int? pageSize);
 
 }

@@ -143,7 +143,7 @@ public class AdminRepository:GenericRepository<Domain.Entities.Manager.Admin.Adm
     public bool IsExists(AdminID Id)
     {
 
-        return DbContext.Admins.Any(x => x.Id == Id&& x.Name.Equals(RoleEnum.SuperAdmin.ToString()));
+        return DbContext.Admins.Any(x => x.Id == Id&& !x.Name.Equals(RoleEnum.SuperAdmin.ToString()));
 
     }
 
@@ -178,6 +178,15 @@ public class AdminRepository:GenericRepository<Domain.Entities.Manager.Admin.Adm
 
         
         
+    }
+
+    public bool Delete(AdminID Id)
+    {
+
+        DbContext.Admins.Where(x=>x.Id==Id).ExecuteUpdate(setter=>setter.SetProperty(x=>x.DateDeleted,DateTime.Now));
+        return true;
+
+
     }
 
     

@@ -1,9 +1,10 @@
+using Common.CQRS;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Model.Manager.Admin.Command;
 
-public class AddAdminCommand:IRequest<JsonResult>
+public class AddAdminCommand:ICommand
 {
  
     public string Name { get; set; }

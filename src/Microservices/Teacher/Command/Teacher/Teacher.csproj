@@ -23,7 +23,7 @@
 
     <ItemGroup>
       <Folder Include="Teacher\Command\" />
-      <Folder Include="Warning\Query\" />
+      <Folder Include="Warning\Query\Validation\" />
     </ItemGroup>
 
 

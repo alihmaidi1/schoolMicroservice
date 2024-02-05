@@ -1,9 +1,10 @@
+using Common.CQRS;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClassDomain.Model.Year.Query;
 
-public class GetAllYearQuery:IRequest<JsonResult>
+public class GetAllYearQuery:IQuery
 {
     
     public string? OrderBy { get; set; }

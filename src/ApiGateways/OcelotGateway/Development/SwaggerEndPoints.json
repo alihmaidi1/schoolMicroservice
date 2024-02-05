@@ -9,7 +9,7 @@
 
         "Name": "Admin Documentation microservice",
         "Version": "v1",
-        "Url": "http://localhost:5109/swagger/admin/swagger.json",
+        "Url": "http://localhost:5109/swagger/admin/swagger.json"
 
         
       }]
@@ -21,8 +21,12 @@
 
         "Name": "Teacher Documentation microservice",
         "Version": "v1",
-        "Url": "http://localhost:5226/swagger/teacher/swagger.json"
-
+        "UseServiceDiscovery": true,
+        "Service": {
+          "Scheme": "http",
+          "Name": "Teacher",
+          "Path": "/swagger/teacher/swagger.json"
+        }
 
       }]
     }

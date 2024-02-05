@@ -12,7 +12,7 @@ namespace Api.Controllers.Manager;
 
 
 // [AppAuthorize(Roles = nameof(RoleEnum.SuperAdmin))]
-[AppAuthorize]
+// [AppAuthorize]
 public class AdminController:ApiController
 {
     

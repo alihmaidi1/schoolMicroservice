@@ -18,6 +18,10 @@
       rabbitmq:
         condition: service_started
         restart: true
+      
+      consul:
+        condition: service_started
+        restart: true
     ports:
       - "5000:80"
   ocelotgateway:
@@ -32,6 +36,7 @@
     depends_on:
       - adminapi
       - teacherapi
+      - consul
     ports:
       - "5005:80"
     
@@ -123,6 +128,10 @@
       rabbitmq:
         condition: service_started
         restart: true
+      
+      consul:
+        condition: service_started
+        restart: true
         
     
     ports:
@@ -157,3 +166,14 @@
       rabbitmq:
         condition: service_started
         restart: true
+      consul:
+        condition: service_started
+        restart: true
+  
+  consul:
+    container_name: consul
+    image: consul
+    ports:
+      - 8501:8500
+      - 8600:8600/tcp
+        

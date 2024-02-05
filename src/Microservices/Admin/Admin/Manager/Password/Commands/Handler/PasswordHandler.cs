@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Common.CQRS;
 using Common.Enum;
 using Common.Jwt;
 using Common.OperationResult;
@@ -16,10 +17,10 @@ using AdminEntity=Domain.Entities.Manager.Admin.Admin;
 namespace Admin.Manager.Password.Commands.Handler;
 
 public class PasswordHandler:OperationResult,
-    IRequestHandler<ForgetPasswordCommand, JsonResult>,
-    IRequestHandler<CheckCodeCommand, JsonResult>,
-    IRequestHandler<ChangePasswordCommand, JsonResult>
-
+    ICommandHandler<ForgetPasswordCommand>,
+    ICommandHandler<CheckCodeCommand>,
+    ICommandHandler<ChangePasswordCommand>
+    
 
 {
     private IAdminRepository adminRepository;

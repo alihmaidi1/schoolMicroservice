@@ -1,3 +1,4 @@
+using ClassDomain.Entities.StageClass;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ClassInfrutructure.Seed;
@@ -20,8 +21,11 @@ public static class ClassDatabasebSeed
 
             await StageSeeder.seedData(context);
             await YearSeeder.seedData(context);
+            await ClassYearSeeder.seedData(context);
+            await SubjectSeeder.seedData(context);
             await transaction.CommitAsync();
 
+            
 
 
         }

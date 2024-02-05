@@ -1,9 +1,10 @@
+using Common.CQRS;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Model.Manager.Admin.Query;
 
-public class GetAllAdminQuery:IRequest<JsonResult>
+public class GetAllAdminQuery:IQuery
 {
     
     public string? OrderBy { get; set; }

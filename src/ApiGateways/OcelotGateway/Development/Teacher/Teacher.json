@@ -3,14 +3,10 @@
   "Routes": [
 
     {
+      "UseServiceDiscovery": true,
+      "ServiceName": "TeacherApi",
+      
       "DownstreamPathTemplate": "/api/v1/teacher",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5226
-        }
-      ],
       "UpstreamPathTemplate": "/api/v1/teacher",
       "UpstreamHttpMethod": [ "Post","Put","Delete","Get","Patch" ],
       "SwaggerKey": "Teacher"

@@ -9,6 +9,8 @@ public class AdminConfigration:IEntityTypeConfiguration<Admin>
 {
     public void Configure(EntityTypeBuilder<Admin> builder)
     {
+
+        builder.HasQueryFilter(x => x.DateDeleted == null);
         builder.HasKey(Admin => Admin.Id);
         builder.Property(Admin => Admin.Id)
             .HasConversion(AdminID => AdminID.Value, Value => new AdminID(Value));
@@ -19,7 +21,7 @@ public class AdminConfigration:IEntityTypeConfiguration<Admin>
 
         builder.HasOne<Role>(Admin => Admin.Role)
             .WithMany(Role => Role.Admins)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.SetNull);
 
         builder.HasMany(x => x.RefreshTokens)
             .WithOne(x => x.Admin)

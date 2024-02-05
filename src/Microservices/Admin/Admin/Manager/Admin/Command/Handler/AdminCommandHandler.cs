@@ -1,6 +1,8 @@
+using Common.CQRS;
 using Common.Email;
 using Common.OperationResult;
 using Common.Rabbitmq.Events.Admin;
+using Hangfire;
 using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +12,9 @@ using Repository.Manager.Admin;
 namespace Admin.Manager.Admin.Command.Handler;
 
 public class AdminCommandHandler:OperationResult,
-    IRequestHandler<AddAdminCommand, JsonResult>,
-    IRequestHandler<UpdateAdminCommand, JsonResult>,
-    IRequestHandler<DeleteAdminCommand, JsonResult>
+    ICommandHandler<AddAdminCommand>,
+    ICommandHandler<UpdateAdminCommand>,
+    ICommandHandler<DeleteAdminCommand>
 
 
 {
@@ -33,8 +35,14 @@ public class AdminCommandHandler:OperationResult,
     {
         
         var id = Guid.NewGuid();
-         MailService.SendMail(request.Email, "new Admin In School",
-            $"You Are New Manager In School and this is your password {request.Password}");
+        BackgroundJob.Enqueue(() =>
+        
+           
+            MailService.SendMail(request.Email, "new Admin In School",
+            $"You Are New Manager In School and this is your password {request.Password}")
+            
+        );
+        
          AdminRepository.Add(id,request.Email, request.Password, request.RoleId, request.Name);
 
          AddAdminEvent addAdminEvent = new AddAdminEvent()
@@ -43,7 +51,7 @@ public class AdminCommandHandler:OperationResult,
              Name = request.Name
          };
          
-         await _publisher.Publish(addAdminEvent); 
+         // await _publisher.Publish(addAdminEvent); 
          return Success("admin was added successfully");
         
     }
@@ -54,6 +62,16 @@ public class AdminCommandHandler:OperationResult,
         MailService.SendMail(request.Email, "update  Admin data In School",
             $"update Manager data In School and this is your password {request.Password}");
         AdminRepository.Update(request.AdminId,request.Email,request.Password,request.RoleId,request.Name);
+
+        
+        UpdateAdminEvent UpdateAdminEvent = new UpdateAdminEvent()
+        {
+            Id = request.AdminId,
+            Name = request.Name
+        };
+        // await _publisher.Publish(UpdateAdminEvent);
+        
+        
         return Success("admin was updated successfully");
 
         
@@ -61,11 +79,7 @@ public class AdminCommandHandler:OperationResult,
 
     public async Task<JsonResult> Handle(DeleteAdminCommand request, CancellationToken cancellationToken)
     {
-        await AdminRepository.DeleteAsync(new Domain.Entities.Manager.Admin.Admin()
-        {
-            Id = request.Id
-        });
-        
+         AdminRepository.Delete(request.Id);
         return Success("Admin was Deleted Successfully");
     }
 }

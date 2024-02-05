@@ -20,13 +20,16 @@ public static class DependencyInjection
         {
 
             config.AddConsumer<AddAdminConsumer>();
+
+            config.AddConsumer<UpdateAdminConsumer>();
+
             config.UsingRabbitMq((context, configure) =>
             {
                 configure.Host(configuration["Rabbitmq"]);
                 configure.ReceiveEndpoint(EventBusConstants.AdminQueue, c =>
                 {
                     c.ConfigureConsumer<AddAdminConsumer>(context);
-                    
+                    c.ConfigureConsumer<UpdateAdminConsumer>(context);
                     
                 });
                 

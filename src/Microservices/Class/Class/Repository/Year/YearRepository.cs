@@ -6,6 +6,7 @@ using ClassDomain.Entities.Year;
 using ClassInfrutructure;
 using Common.Entity.EntityOperation;
 using Common.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace Class.Repository.Year;
 
@@ -28,6 +29,15 @@ public class YearRepository:GenericRepository<ClassDomain.Entities.Year.Year>,IY
 
         return DbContext.Years.Any(x => x.Name.Equals(Name) && x.Id != id);
     }
+
+    public bool Delete(YearID Id)
+    {
+        //
+        // DbContext.Years.Where(x => x.Id == Id).ExecuteDelete();
+
+        return true;
+    }
+
 
     public bool IsExists(YearID id)
     {

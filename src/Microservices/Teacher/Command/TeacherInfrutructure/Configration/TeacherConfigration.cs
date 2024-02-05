@@ -8,7 +8,9 @@ public class TeacherConfigration:IEntityTypeConfiguration<Teacher>
 {
     public void Configure(EntityTypeBuilder<Teacher> builder)
     {
+
         
+        builder.HasQueryFilter(x => x.DateDeleted == null);
         builder.HasKey(Teacher => Teacher.Id);
         builder.Property(Teacher => Teacher.Id)
             .HasConversion(TeacherID => TeacherID.Value, Value => new TeacherID(Value));

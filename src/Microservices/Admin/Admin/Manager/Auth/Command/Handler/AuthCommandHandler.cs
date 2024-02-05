@@ -1,3 +1,4 @@
+using Common.CQRS;
 using Common.Enum;
 using Common.Jwt;
 using Common.OperationResult;
@@ -17,9 +18,9 @@ using Adminentity=Domain.Entities.Manager.Admin.Admin;
 namespace Admin.Manager.Auth.Command.Handler;
 
 public class AuthCommandHandler:OperationResult,
-                                IRequestHandler<LoginAdminCommand, JsonResult>,
-                                IRequestHandler<LogoutAdminCommand, JsonResult>,
-                                IRequestHandler<RefreshAdminTokenCommand, JsonResult>
+                ICommandHandler<LoginAdminCommand>,
+                ICommandHandler<LogoutAdminCommand>,
+                ICommandHandler<RefreshAdminTokenCommand>
 
 
 {
@@ -61,8 +62,8 @@ public class AuthCommandHandler:OperationResult,
         
         if (admin.Password.Equals(request.Password))
         {
-            Dictionary<string, string> Permissions = admin.Role.Permissions.ToDictionary(x => x, x => x);
-            Permissions.Add("role",admin.Role.Name);
+            Dictionary<string, string>? Permissions = admin.Role?.Permissions?.ToDictionary(x => x, x => x);
+            Permissions?.Add("role",admin.Role?.Name);
                 
             
             var tokens =  jwtRepository.GetTokensInfo(admin.Id,admin.Email,Permissions);
@@ -117,9 +118,9 @@ public class AuthCommandHandler:OperationResult,
             })
             .FirstOrDefault(x => x.Token.Equals(request.RefreshToken));
         DbContext.AdminRefreshTokens.Remove(RefreshToken);
-        Dictionary<string,string> permissions = RefreshToken.Admin.Role.Permissions.ToDictionary(x=>x,x=>x);
+        Dictionary<string,string>? permissions = RefreshToken.Admin.Role?.Permissions?.ToDictionary(x=>x,x=>x);
         
-        permissions.Add("role",RefreshToken.Admin.Role.Name);
+        permissions?.Add("role",RefreshToken.Admin.Role?.Name);
         var TokensData =  this.jwtRepository.GetTokensInfo(RefreshToken.Admin.Id,RefreshToken.Admin.Email,permissions);
         TokenDto TokenInfo = TokenDto.ToTokenDto(TokensData.token,TokensData.ExpiredAt,TokensData.refreshToken);
         return Success(TokenInfo);

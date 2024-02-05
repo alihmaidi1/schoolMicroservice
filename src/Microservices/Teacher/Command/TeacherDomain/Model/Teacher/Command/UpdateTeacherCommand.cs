@@ -1,9 +1,10 @@
+using Common.CQRS;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Domain.Model.Teacher.Command;
 
-public class UpdateTeacherCommand:IRequest<JsonResult>
+public class UpdateTeacherCommand:ICommand
 {
 
     public Guid Id { get; set; }

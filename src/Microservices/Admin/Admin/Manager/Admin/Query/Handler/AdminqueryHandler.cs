@@ -1,3 +1,4 @@
+using Common.CQRS;
 using Common.OperationResult;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,8 @@ using Repository.Manager.Admin;
 namespace Admin.Manager.Admin.Query.Handler;
 
 public class AdminqueryHandler:OperationResult,
-    IRequestHandler<GetAllAdminQuery, JsonResult>
+    IQueryHandler<GetAllAdminQuery>
+
 {
     private IAdminRepository adminRepository;
     public AdminqueryHandler(IAdminRepository adminRepository)

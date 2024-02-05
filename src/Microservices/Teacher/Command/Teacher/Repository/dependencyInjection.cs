@@ -1,4 +1,6 @@
+using Domain.Repository.Vacation;
 using Domain.Repository.Warning;
+using Domain.Repository.Year;
 using Microsoft.Extensions.DependencyInjection;
 using Repository.Teacher;
 using Teacher.Repository.Teacher;
@@ -15,6 +17,10 @@ public static class dependencyInjection
 
         services.AddTransient<IWarningRepository, WarningRepository>();
         
+        services.AddTransient<IYearRepository, YearRepository>();
+
+        services.AddTransient<IVacationRepository, VacationRepository>();
+
         return services;
 
     }

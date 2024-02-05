@@ -10,4 +10,9 @@
       <ProjectReference Include="..\..\..\Common\Common.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Model\Bill\Query\" />
+      <Folder Include="Model\Subject\Query\" />
+    </ItemGroup>
+
 </Project>

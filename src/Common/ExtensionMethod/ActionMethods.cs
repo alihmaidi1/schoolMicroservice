@@ -6,6 +6,8 @@ using Common.OperationResult.Base;
 using Microsoft.AspNetCore.Http;
 
 using FluentValidation;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using ValidationException = FluentValidation.ValidationException;
 
 namespace Common.ExtensionMethod;
@@ -20,10 +22,16 @@ public static class ActionMethods
                 response.ContentType= "application/json";
                 var Result = new OperationResultBase<string>() { };
 
-
+                
+                
                 switch (error)
                 {
 
+
+
+                    
+                    
+                    
 
                     case ValidationException exception:
                         Result.Message = exception.Message;
@@ -46,11 +54,36 @@ public static class ActionMethods
                         response.StatusCode = (int)HttpStatusCode.Forbidden;
                         break;
 
+                    
+                    case DbUpdateException exception:
+
+                        var innerexception = exception.InnerException;
+                        if (innerexception is SqlException&& ((SqlException)(innerexception)).ErrorCode==-2146232060)
+                        {
+                            Result.Message = "you can't delete this record becuase it is have relation data";
+                            Result.StatusCode= (int)HttpStatusCode.InternalServerError;
+                            response.StatusCode= (int)HttpStatusCode.InternalServerError;
+                            break;
+    
+                        }
+                        else
+                        {
+                            
+                            Result.Message = exception.Message;
+                            Result.StatusCode= (int)HttpStatusCode.InternalServerError;
+                            response.StatusCode= (int)HttpStatusCode.InternalServerError;
+                            break;
+                            
+                            
+                        }
+                        
+                        ;
                     case Exception exception:
                         Result.Message = exception.Message;
                         Result.StatusCode= (int)HttpStatusCode.InternalServerError;
                         response.StatusCode= (int)HttpStatusCode.InternalServerError;
                         break;
+                    
                     default :
                         Result.Message = error.Message;
                         Result.StatusCode = (int)HttpStatusCode.InternalServerError;

@@ -17,7 +17,7 @@ public class Vacation:BaseEntity<VacationID>
     
     public string Reason { get; set; }
     
-    public bool Status { get; set; }
+    public bool? Status { get; set; }
 
     public int Days { get; set; }
 

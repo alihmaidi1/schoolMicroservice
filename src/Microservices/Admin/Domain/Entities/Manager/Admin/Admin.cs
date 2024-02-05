@@ -22,8 +22,8 @@ public class Admin:AccountEntity<AdminID>
     
     public string Email { get; set; }
 
-    public RoleID RoleId { get; set; }
-    public  Role.Role Role { set; get; }
+    public RoleID? RoleId { get; set; }
+    public  Role.Role? Role { set; get; }
     
     
     [EncryptColumn]

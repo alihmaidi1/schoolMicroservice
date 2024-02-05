@@ -5,6 +5,7 @@ using Domain.Dto.Teacher;
 using Domain.Entities.Teacher;
 using infrutructure;
 using Infrutructure;
+using Microsoft.EntityFrameworkCore;
 using Repository.Base;
 using Teacher.Repository.Teacher;
 using ApplicationDbContext = Teacherinfrutructure.ApplicationDbContext;
@@ -102,6 +103,63 @@ public class TeacherRepository:GenericRepository<Domain.Entities.Teacher.Teacher
 
 
         return Result;
+    }
+
+    public bool Delete(TeacherID Id)
+    {
+
+
+        DbContext.Teachers.Where(x => x.Id == Id)
+            .ExecuteUpdate(setter => setter.SetProperty(x => x.DateDeleted, DateTime.Now));
+
+        DbContext.SaveChanges();
+        return true;
+
+    }
+
+
+    public GetTeacherResponse GetTeacher(TeacherID Id)
+    {
+
+        GetTeacherResponse teacher = DbContext
+            .Teachers
+            .Include(x=>x.Warnings)
+            .ThenInclude(x=>x.Manager)
+            .Include(x=>x.Vacations)
+            .ThenInclude(x=>x.Year)
+            .Include(x=>x.Vacations)
+            .ThenInclude(x=>x.Manager)
+            .Select(x=>new GetTeacherResponse()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Email = x.Email,
+                Status = x.status,
+                Warnings = x.Warnings.Select(y=>new Warning()
+                {
+                    Id = y.Id,
+                    ManagerName = y.Manager.Name,
+                    Reason = y.Reason
+                    
+                }).ToList(),
+                
+                Vacations = x.Vacations.Select(z=>new Vacation()
+                {
+                    
+                    Id = z.Id,
+                    ManagerName = z.Manager.Name,
+                    Reason = z.Reason,
+                    Year = z.Year.Name
+                    
+                }).ToList()
+                
+            })
+            .First(x=>x.Id==Id);
+
+        return teacher;
+
+
+
     }
 
 }

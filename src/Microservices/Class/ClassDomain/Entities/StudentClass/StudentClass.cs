@@ -12,6 +12,6 @@ public class StudentClass:BaseEntity<StudentClassID>
     public Student.Student Student { get; set; }
     
     
-    public StageClassID StageClassId { get; set; }
-    public StageClass.StageClass StageClass { get; set; }
+    public ClassYearID ClassYearId { get; set; }
+    public StageClass.ClassYear ClassYear { get; set; }
 }

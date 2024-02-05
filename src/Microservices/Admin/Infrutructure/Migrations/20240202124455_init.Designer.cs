@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrutructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240104195444_init")]
+    [Migration("20240202124455_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace Infrutructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TeacherDomain.Entities.Manager.Admin.Admin", b =>
+            modelBuilder.Entity("Domain.Entities.Manager.Admin.Admin", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -60,7 +60,7 @@ namespace Infrutructure.Migrations
                     b.Property<string>("ResetCode")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("RoleId")
+                    b.Property<Guid?>("RoleId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("UpdatedBy")
@@ -73,7 +73,7 @@ namespace Infrutructure.Migrations
                     b.ToTable("Admins");
                 });
 
-            modelBuilder.Entity("TeacherDomain.Entities.Manager.Admin.AdminRefreshToken", b =>
+            modelBuilder.Entity("Domain.Entities.Manager.Admin.AdminRefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -96,7 +96,7 @@ namespace Infrutructure.Migrations
                     b.ToTable("AdminRefreshTokens");
                 });
 
-            modelBuilder.Entity("TeacherDomain.Entities.Manager.Role.Role", b =>
+            modelBuilder.Entity("Domain.Entities.Manager.Role.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -132,20 +132,19 @@ namespace Infrutructure.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("TeacherDomain.Entities.Manager.Admin.Admin", b =>
+            modelBuilder.Entity("Domain.Entities.Manager.Admin.Admin", b =>
                 {
-                    b.HasOne("TeacherDomain.Entities.Manager.Role.Role", "Role")
+                    b.HasOne("Domain.Entities.Manager.Role.Role", "Role")
                         .WithMany("Admins")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("TeacherDomain.Entities.Manager.Admin.AdminRefreshToken", b =>
+            modelBuilder.Entity("Domain.Entities.Manager.Admin.AdminRefreshToken", b =>
                 {
-                    b.HasOne("TeacherDomain.Entities.Manager.Admin.Admin", "Admin")
+                    b.HasOne("Domain.Entities.Manager.Admin.Admin", "Admin")
                         .WithMany("RefreshTokens")
                         .HasForeignKey("AdminId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -154,12 +153,12 @@ namespace Infrutructure.Migrations
                     b.Navigation("Admin");
                 });
 
-            modelBuilder.Entity("TeacherDomain.Entities.Manager.Admin.Admin", b =>
+            modelBuilder.Entity("Domain.Entities.Manager.Admin.Admin", b =>
                 {
                     b.Navigation("RefreshTokens");
                 });
 
-            modelBuilder.Entity("TeacherDomain.Entities.Manager.Role.Role", b =>
+            modelBuilder.Entity("Domain.Entities.Manager.Role.Role", b =>
                 {
                     b.Navigation("Admins");
                 });

@@ -6,6 +6,7 @@ using ClassInfrutructure;
 using ClassInfrutructure.Seed;
 using Common.Api;
 using Common.Authorization.Handlers;
+using Common.Consul;
 using Common.ElasticSearch;
 using Common.Email;
 using Common.Enum;
@@ -89,5 +90,4 @@ app.UseHangfireDashboard("/hangfiredashboard");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-
 app.Run();

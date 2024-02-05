@@ -5,5 +5,7 @@ namespace Domain.Repository;
 
 public interface IManagerRepository:IgenericRepository<Manager>
 {
-    
+
+
+
 }

@@ -1,9 +1,10 @@
+using Common.CQRS;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Domain.Model.Teacher.Query;
 
-public class GetAllTeacher:IRequest<JsonResult>
+public class GetAllTeacher:IQuery
 {
  
     

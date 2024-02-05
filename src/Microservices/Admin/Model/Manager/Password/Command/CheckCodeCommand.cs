@@ -1,9 +1,10 @@
+using Common.CQRS;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Model.Manager.Password.Command;
 
-public class CheckCodeCommand:IRequest<JsonResult>
+public class CheckCodeCommand:ICommand
 {
     
     

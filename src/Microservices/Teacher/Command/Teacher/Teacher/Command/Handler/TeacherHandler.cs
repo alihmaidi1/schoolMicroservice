@@ -1,4 +1,5 @@
 using System.Reflection.Metadata.Ecma335;
+using Common.CQRS;
 using Common.OperationResult;
 using Domain.Model.Teacher.Command;
 using MediatR;
@@ -8,11 +9,10 @@ using Teacher.Repository.Teacher;
 namespace Teacher.Teacher.Command.Handler;
 
 public class TeacherHandler:OperationResult,
-    IRequestHandler<AddTeacherCommand, JsonResult>,
-    IRequestHandler<UpdateTeacherCommand, JsonResult>,
-    IRequestHandler<DeleteTeacherCommand, JsonResult>,
-    IRequestHandler<ChangeTeacherStatusCommand, JsonResult>
-
+    ICommandHandler<AddTeacherCommand>,
+    ICommandHandler<UpdateTeacherCommand>,
+    ICommandHandler<DeleteTeacherCommand>,
+    ICommandHandler<ChangeTeacherStatusCommand>
 
 
 {
@@ -41,12 +41,8 @@ public class TeacherHandler:OperationResult,
 
     public async Task<JsonResult> Handle(DeleteTeacherCommand request, CancellationToken cancellationToken)
     {
-        
-        await TeacherRepository.DeleteAsync(new Domain.Entities.Teacher.Teacher()
-        {
-            Id = request.Id
-        });
-        
+     
+        TeacherRepository.Delete(request.Id);
         return Success("teacher was updated successfully");
     }
 

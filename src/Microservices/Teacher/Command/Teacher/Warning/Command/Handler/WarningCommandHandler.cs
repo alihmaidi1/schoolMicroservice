@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Common.CQRS;
 using Common.OperationResult;
 using Domain.Model.Warning.Command;
 using Domain.Repository.Warning;
@@ -9,9 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Teacher.Warning.Command.Handler;
 
 public class WarningCommandHandler:OperationResult,
-    IRequestHandler<AddWarningCommand, JsonResult>,
-    IRequestHandler<DeleteWarningCommand, JsonResult>
-
+    ICommandHandler<AddWarningCommand>,
+    ICommandHandler<DeleteWarningCommand>
     
 {
     private IWarningRepository WarningRepository;

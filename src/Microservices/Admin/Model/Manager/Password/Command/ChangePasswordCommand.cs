@@ -1,9 +1,10 @@
+using Common.CQRS;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Model.Manager.Password.Command;
 
-public class ChangePasswordCommand:IRequest<JsonResult>
+public class ChangePasswordCommand:ICommand
 {
     
     

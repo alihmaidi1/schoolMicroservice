@@ -1,3 +1,4 @@
+using Common.CQRS;
 using Common.OperationResult;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -8,9 +9,9 @@ using Repository.Manager.Role;
 namespace Admin.Manager.Role.Command.Handler;
 
 public class RoleCommandHandler:OperationResult,
-    IRequestHandler<AddRoleCommand, JsonResult>,
-    IRequestHandler<UpdateRoleCommand, JsonResult>,
-    IRequestHandler<DeleteRoleCommand, JsonResult>
+    ICommandHandler<AddRoleCommand>,
+    ICommandHandler<UpdateRoleCommand>,
+    ICommandHandler<DeleteRoleCommand>
 
 
 {

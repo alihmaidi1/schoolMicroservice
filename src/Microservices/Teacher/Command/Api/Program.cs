@@ -1,6 +1,7 @@
 using Api.Middleware;
 using Common.Api;
 using Common.Authorization.Handlers;
+using Common.Consul;
 using Common.ElasticSearch;
 using Common.Email;
 using Common.Enum;
@@ -33,9 +34,20 @@ builder.Services.AddHangfire(x => x.UseSqlServerStorage(builder.Configuration["C
 builder.Services.AddHangfireServer();
 builder.Services.AddHealthChecks()
      .AddSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]??"null", failureStatus: HealthStatus.Degraded)
-     .AddRedis(builder.Configuration["RedisConnection"]??"", failureStatus: HealthStatus.Degraded);
-     // .AddHangfire(null);
+     .AddRedis(builder.Configuration["RedisConnection"]??"", failureStatus: HealthStatus.Degraded)
+     
+     .AddConsul(options =>
+{
+     var Consul=builder.Configuration["Consul:Address"]??"http://localhost:8500";
+     var address = new Uri(Consul);
+     options.Port = address.Port;
+     options.HostName = address.Host;
+     options.RequireHttps = false;
+     options.RequireBasicAuthentication = false;
+});     
+// .AddHangfire(null);
 
+     builder.Services.AddConsulConfigure(builder.Configuration);
 
      if (!Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT").Equals("Development"))
      {
@@ -97,6 +109,8 @@ app.UseHangfireDashboard("/hangfiredashboard");
 app.UseAuthentication();
 app.UseAuthorization();
 
+
+app.RegisterWithConsul(app.Lifetime,builder.Configuration["AppName"],builder.WebHost.GetSetting(WebHostDefaults.ServerUrlsKey));
 app.MapControllers();
 
 app.Run();

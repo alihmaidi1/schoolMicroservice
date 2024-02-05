@@ -38,7 +38,7 @@ public class GenericRepository<T>: IgenericRepository<T> where T : class
     {
 
         DbContext.Set<T>().Remove(entity);
-        DbContext.SaveChangesAsync();
+        DbContext.SaveChanges();
     }
 
     public virtual async Task<List<T>> GetAllasync()

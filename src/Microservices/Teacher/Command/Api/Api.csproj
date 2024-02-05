@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="AspNetCore.HealthChecks.Consul" Version="8.0.0" />
       <PackageReference Include="AspNetCore.HealthChecks.Hangfire" Version="8.0.0" />
       <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="8.0.0" />
       <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="8.0.0" />

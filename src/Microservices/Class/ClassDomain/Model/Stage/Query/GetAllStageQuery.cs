@@ -1,9 +1,10 @@
+using Common.CQRS;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClassDomain.Model.Stage.Query;
 
-public class GetAllStageQuery:IRequest<JsonResult>
+public class GetAllStageQuery:IQuery
 {
     public string? OrderBy { get; set; }
     

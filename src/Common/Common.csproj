@@ -19,6 +19,9 @@
       <Reference Include="Microsoft.AspNetCore.Mvc.Formatters.Json">
         <HintPath>..\..\..\..\.nuget\packages\microsoft.aspnetcore.mvc.formatters.json\2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.Formatters.Json.dll</HintPath>
       </Reference>
+      <Reference Include="Microsoft.Data.SqlClient">
+        <HintPath>..\..\..\..\.nuget\packages\microsoft.data.sqlclient\5.1.0\ref\net6.0\Microsoft.Data.SqlClient.dll</HintPath>
+      </Reference>
       <Reference Include="Microsoft.EntityFrameworkCore">
         <HintPath>..\..\..\..\.nuget\packages\microsoft.entityframeworkcore\6.0.0\lib\net6.0\Microsoft.EntityFrameworkCore.dll</HintPath>
       </Reference>
@@ -28,6 +31,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Consul" Version="1.7.14.2" />
       <PackageReference Include="FluentValidation" Version="11.9.0" />
       <PackageReference Include="MailKit" Version="4.3.0" />
       <PackageReference Include="MediatR" Version="12.2.0" />

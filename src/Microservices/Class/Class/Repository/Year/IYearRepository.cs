@@ -11,6 +11,7 @@ public interface IYearRepository:IgenericRepository<ClassDomain.Entities.Year.Ye
 {
 
     public bool IsExists(string Name);
+    public bool Delete(YearID Id);
 
     public bool IsExists(string Name,YearID id );
 

@@ -1,5 +1,6 @@
 using Class.Repository.Stage;
 using ClassDomain.Model.Stage.Query;
+using Common.CQRS;
 using Common.OperationResult;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -7,8 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Class.Stage.Query.Handler;
 
 public class StageQueryHandler:OperationResult,
-    IRequestHandler<GetAllStageQuery, JsonResult>,
-    IRequestHandler<GetStageQuery, JsonResult>
+    IQueryHandler<GetAllStageQuery>,
+    IQueryHandler<GetStageQuery>
 
 {
     private IStageRepository StageRepository;

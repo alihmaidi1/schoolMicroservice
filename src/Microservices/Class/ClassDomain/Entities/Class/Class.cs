@@ -1,4 +1,5 @@
 using ClassDomain.Entities.Stage;
+using ClassDomain.Entities.StageClass;
 using Common.Entity.Entity;
 
 namespace ClassDomain.Entities.Class;
@@ -10,6 +11,7 @@ public class Class:BaseEntity<ClassID>
     {
 
         Id = new ClassID(Guid.NewGuid());
+        ClassYears = new HashSet<ClassYear>();
     }
     
     public string Name { get; set; }
@@ -18,5 +20,7 @@ public class Class:BaseEntity<ClassID>
     
     public Stage.Stage Stage { get; set; }
     
+    
+    public ICollection<ClassYear > ClassYears { get; set; }
     
 }

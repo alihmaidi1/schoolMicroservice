@@ -30,12 +30,14 @@ public class GenericRepository<T>: IgenericRepository<T> where T : class
         DbContext.Database.CommitTransaction();
     }
 
-    public async Task DeleteAsync(T entity)
+    public  Task DeleteAsync(T entity)
     {
 
         DbContext.Set<T>().Remove(entity);
-        DbContext.SaveChangesAsync();
+        DbContext.SaveChanges();
+        return Task.CompletedTask;
     }
+
 
     public virtual async Task<List<T>> GetAllasync()
     {

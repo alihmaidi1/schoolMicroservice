@@ -14,6 +14,8 @@ public static class SuperAdminSeed
         {
 
             List<string> Permissions = Enum.GetNames(typeof(PermissionEnum)).ToList();
+            
+            
             Role role = new Role()
             {
 
@@ -22,17 +24,47 @@ public static class SuperAdminSeed
                 Permissions = Permissions
 
             };
-            Admin SuperAdmin = new Admin()
+
+            
+            Role role2 = new Role()
+            {
+
+                Name = "role2",
+                
+                Permissions = Permissions
+
+            };
+            List<Admin> Admins = new List<Admin>();
+            
+            Admins.Add( new Admin()
             {
                 Name =RoleEnum.SuperAdmin.ToString(),
                 Email = "alihmaidi095@gmail.com",
                 Password = "12345678",
                 Role = role,
                 Id = new Guid("f1cfc8cb-df51-425c-a37c-db1db5519127")
-            };
+            });
+
+            Admins.Add(new Admin()
+            {
+
+                
+                Name ="Ali",
+                Email = "alihmaidi10@gmail.com",
+                Password = "12345678",
+                Role = role2,
+                Id = new Guid("f1cfc8cb-df51-425c-a37c-db1db5519128")
+
+
+            });
+            
+            ;
             
             
-            context.Admins.Add(SuperAdmin);
+            
+            
+            
+            context.AddRange(Admins);
             context.SaveChanges();
 
         }

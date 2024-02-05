@@ -22,8 +22,6 @@ public class Year:BaseEntity<YearVacationID>
     public string Name { get; set; }
     
     
-    public Guid YearId { get; set; }
-    
     
     
 }

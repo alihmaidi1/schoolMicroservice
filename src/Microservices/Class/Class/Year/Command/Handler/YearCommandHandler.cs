@@ -1,6 +1,7 @@
 using Class.Repository.Year;
 using ClassDomain.Entities.Year;
 using ClassDomain.Model.Year.Command;
+using Common.CQRS;
 using Common.OperationResult;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -8,10 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace Class.Year.Command.Handler;
 
 public class YearCommandHandler:OperationResult,
-    IRequestHandler<AddYearCommand, JsonResult>,
-    IRequestHandler<UpdateYearCommand, JsonResult>,
-    IRequestHandler<DeleteYearCommand, JsonResult>
-
+    ICommandHandler<AddYearCommand>,
+    ICommandHandler<UpdateYearCommand>,
+    ICommandHandler<DeleteYearCommand>
 
 {
     private IYearRepository YearRepository;
@@ -47,12 +47,14 @@ public class YearCommandHandler:OperationResult,
     public async Task<JsonResult> Handle(DeleteYearCommand request, CancellationToken cancellationToken)
     {
 
+        // YearRepository.Delete(request.Id);
         await YearRepository.DeleteAsync(new ClassDomain.Entities.Year.Year()
         {
-
+        
             Id = new YearID(request.Id)
-
+        
         });
+        
         return Success("year was deleted successfully");
     }
 }

@@ -1,4 +1,5 @@
 using System.Reflection.Metadata.Ecma335;
+using Common.CQRS;
 using Common.OperationResult;
 using Domain.Enum;
 using MediatR;
@@ -9,9 +10,9 @@ using Repository.Manager.Role;
 namespace Admin.Manager.Role.Query.Handler;
 
 public class RoleQueryHandler:OperationResult,
-    IRequestHandler<GetPermissionsQuery, JsonResult>,
-    IRequestHandler<GetRolesQuery, JsonResult>,
-    IRequestHandler<GetManagerByRoleQuery, JsonResult>
+    IQueryHandler<GetPermissionsQuery>,
+    IQueryHandler<GetRolesQuery>,
+    IQueryHandler<GetManagerByRoleQuery>
 
 
 {

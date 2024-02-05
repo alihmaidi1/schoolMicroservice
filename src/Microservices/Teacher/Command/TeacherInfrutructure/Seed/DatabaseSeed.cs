@@ -16,12 +16,13 @@ public static class DatabaseSeed
 
         try
         {
-
-
+            
+            await SuperAdminSeed.seedData(context);
             await YearSeeder.seedData(context);
+            await TeacherSeeder.seedData(context);
+            await WarningSeeder.seedData(context);
+            await VacationSeeder.seedData(context);
             await transaction.CommitAsync();
-
-
 
         }
         catch(Exception ex) 

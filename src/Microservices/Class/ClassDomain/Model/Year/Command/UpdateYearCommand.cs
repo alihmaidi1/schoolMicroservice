@@ -1,9 +1,10 @@
+using Common.CQRS;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClassDomain.Model.Year.Command;
 
-public class UpdateYearCommand:IRequest<JsonResult>
+public class UpdateYearCommand:ICommand
 {
     
     public Guid Id { get; set; }

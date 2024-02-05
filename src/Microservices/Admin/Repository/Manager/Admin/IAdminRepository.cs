@@ -35,6 +35,9 @@ public interface IAdminRepository:IgenericRepository<Domain.Entities.Manager.Adm
 
     public bool Update(AdminID Id, string Email,string Password,RoleID roleId,string Name);
 
+
+    public bool Delete(AdminID Id);
+    
     
     public PageList<GetAllAdmin> GetAlladmin(string? OrderBy, int? pageNumber, int? pageSize);
 

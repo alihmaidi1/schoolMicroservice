@@ -13,7 +13,11 @@ public class YearConfigration:IEntityTypeConfiguration<Year>
         builder
             .Property(x => x.Id)
             .HasConversion(x => x.Value, Value => new YearID(Value));
-        
-        
+
+
+        builder.HasMany(x => x.ClassYears)
+            .WithOne(x => x.Year)
+            .HasForeignKey(x => x.YearId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

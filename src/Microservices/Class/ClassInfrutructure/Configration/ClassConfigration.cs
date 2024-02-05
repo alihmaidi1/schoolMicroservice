@@ -11,7 +11,12 @@ public class ClassConfigration:IEntityTypeConfiguration<Class>
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id)
             .HasConversion(x => x.Value, Value => new ClassID(Value));
+
+        builder.HasMany(x => x.ClassYears)
+            .WithOne(x => x.Class)
+            .HasForeignKey(x => x.ClassId);
+
         
-        
+
     }
 }
