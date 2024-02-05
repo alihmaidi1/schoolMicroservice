@@ -1,9 +1,8 @@
 using System.Reflection;
 using ClassDomain.Entities.Bill;
 using ClassDomain.Entities.Class;
+using ClassDomain.Entities.ClassYear;
 using ClassDomain.Entities.Stage;
-using ClassDomain.Entities.StageClass;
-using ClassDomain.Entities.Subject;
 using ClassDomain.Entities.Year;
 using EntityFrameworkCore.EncryptColumn.Extension;
 using EntityFrameworkCore.EncryptColumn.Interfaces;
@@ -41,7 +40,6 @@ public class ApplicationDbContext:DbContext
     public DbSet<Class> Classes { get; set; }
 
     
-    public DbSet<Subject> Subjects { get; set; }
     
     public DbSet< Bill> Bills { get; set; }
     public DbSet<ClassYear> ClassYears { get; set; }

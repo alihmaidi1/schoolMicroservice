@@ -58,13 +58,7 @@ public class BillCommandHandler:OperationResult,
 
     public async Task<JsonResult> Handle(DeleteBillCommand request, CancellationToken cancellationToken)
     {
-
-        ClassDomain.Entities.Bill.Bill bill = new ClassDomain.Entities.Bill.Bill()
-        {
-            Id = request.Id
-        };
-        
-        await BillRepository.DeleteAsync(bill);
+        BillRepository.Delete(request.Id);
         return Success("bill was deleted successfully");
 
 

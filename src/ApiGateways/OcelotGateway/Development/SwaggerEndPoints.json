@@ -23,7 +23,6 @@
         "Version": "v1",
         "UseServiceDiscovery": true,
         "Service": {
-          "Scheme": "http",
           "Name": "Teacher",
           "Path": "/swagger/teacher/swagger.json"
         }

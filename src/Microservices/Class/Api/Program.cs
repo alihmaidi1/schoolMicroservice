@@ -29,6 +29,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
 
+builder.Services.AddConsulConfigure(builder.Configuration);
 builder.Services.AddTransient<ICacheRepository,CacheRepository>();
 
 
@@ -60,7 +61,7 @@ builder.Services.AddSwaggerGen().AddOpenApi("student","student Service","v1","st
 builder.Services.AddHttpClient();
 builder.Services.AddRepository();
 
-builder.Services.AddClass();
+builder.Services.AddClass(builder.Configuration);
 
 var app = builder.Build();
 
@@ -90,4 +91,6 @@ app.UseHangfireDashboard("/hangfiredashboard");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+app.RegisterWithConsul(app.Lifetime,builder.Configuration["AppName"],builder.WebHost.GetSetting(WebHostDefaults.ServerUrlsKey));
 app.Run();

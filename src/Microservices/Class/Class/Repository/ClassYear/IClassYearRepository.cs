@@ -7,12 +7,13 @@ using Common.Entity.EntityOperation;
 
 namespace Class.Repository.ClassYear;
 
-public interface IClassYearRepository:IgenericRepository<ClassDomain.Entities.StageClass.ClassYear>
+public interface IClassYearRepository:IgenericRepository<ClassDomain.Entities.ClassYear.ClassYear>
 {
 
 
     public bool IsExists(ClassYearID Id);
 
+    public bool Delete(ClassYearID Id);
     public bool Update(ClassYearID Id ,List<ClassDomain.Entities.Bill.Bill> bills);
     public PageList<GetAllClassYearResponse> GetAllClassYear(ClassID id, int? pageNumber, int? pageSize);
 

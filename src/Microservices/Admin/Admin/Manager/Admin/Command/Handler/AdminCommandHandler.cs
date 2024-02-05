@@ -80,6 +80,7 @@ public class AdminCommandHandler:OperationResult,
     public async Task<JsonResult> Handle(DeleteAdminCommand request, CancellationToken cancellationToken)
     {
          AdminRepository.Delete(request.Id);
+
         return Success("Admin was Deleted Successfully");
     }
 }

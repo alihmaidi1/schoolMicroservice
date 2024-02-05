@@ -6,9 +6,11 @@
 
     "ServiceDiscoveryProvider": {
 
+      "Scheme": "http",
       "Host": "consul",
       "Port": 8500,
-      "Type": "Consul"
+      "Type": "Consul",
+      "PollingInterval": 1000
 
     }
   }

@@ -1,5 +1,6 @@
 using Bogus;
 using ClassDomain.Entities.Class;
+using ClassDomain.Entities.ClassYear;
 using ClassDomain.Entities.StageClass;
 using ClassDomain.Entities.Year;
 
@@ -7,7 +8,7 @@ namespace ClassInfrutructure.Data;
 
 public static class ClassYearFaker
 {
-    public static Faker<ClassYear> GetBrandFaker(List<Class> classes,List<Year> years)
+    public static Faker<ClassYear> GetClassYearFaker(List<Class> classes,List<Year> years)
     {
 
         var ClassYear = new Faker<ClassYear>();

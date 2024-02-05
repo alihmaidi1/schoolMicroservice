@@ -18,7 +18,7 @@ public static class ClassYearSeeder
             List<Year> years = context.Years.ToList();
             List<Class> classes = context.Classes.ToList();
             var classYears = ClassYearFaker
-                .GetBrandFaker(classes,years)
+                .GetClassYearFaker(classes,years)
                 .Generate(10)
                 .DistinctBy(x=>new {x.ClassId,x.YearId})
                 .ToList();

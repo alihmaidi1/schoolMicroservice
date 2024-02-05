@@ -7,6 +7,7 @@ using MassTransit.MultiBus;
 using Microsoft.Extensions.Configuration;
 using Teacher.EventBusConsumer;
 using Teacher.EventBusConsumer.Admin;
+using Teacher.EventBusConsumer.Year;
 
 namespace Teacher;
 
@@ -20,9 +21,12 @@ public static class DependencyInjection
         {
 
             config.AddConsumer<AddAdminConsumer>();
-
             config.AddConsumer<UpdateAdminConsumer>();
+            
+            
+            config.AddConsumer<AddYearConsumer>();
 
+            config.AddConsumer<UpdateYearConsumer>();
             config.UsingRabbitMq((context, configure) =>
             {
                 configure.Host(configuration["Rabbitmq"]);
@@ -30,13 +34,23 @@ public static class DependencyInjection
                 {
                     c.ConfigureConsumer<AddAdminConsumer>(context);
                     c.ConfigureConsumer<UpdateAdminConsumer>(context);
+
+                    c.ConfigureConsumer<AddYearConsumer>(context);
+                    c.ConfigureConsumer<UpdateYearConsumer>(context);
+
+                    // c.ConfigureConsumer<UpdateAdminConsumer>(context);
+                    // c.ConfigureConsumer<DeleteAdminConsumer>(context);
+
                     
                 });
                 
             });
-            services.AddScoped<AddAdminConsumer>();
             
-
+            services.AddScoped<AddAdminConsumer>();
+            services.AddScoped<UpdateAdminConsumer>();
+            
+            services.AddScoped<AddYearConsumer>();
+            services.AddScoped<UpdateYearConsumer>();
 
         });
         

@@ -15,4 +15,9 @@
       <Folder Include="Model\Subject\Query\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="EntityFrameworkCore.DataEncryption" Version="5.0.0" />
+      <PackageReference Include="EntityFrameworkCore.EncryptColumn" Version="6.0.8" />
+    </ItemGroup>
+
 </Project>

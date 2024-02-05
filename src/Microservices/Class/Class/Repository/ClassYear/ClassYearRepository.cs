@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Class.Repository.ClassYear;
 
-public class ClassYearRepository:GenericRepository<ClassDomain.Entities.StageClass.ClassYear>,IClassYearRepository
+public class ClassYearRepository:GenericRepository<ClassDomain.Entities.ClassYear.ClassYear>,IClassYearRepository
 {
     public ClassYearRepository(ApplicationDbContext DbContext) : base(DbContext)
     {
@@ -44,6 +44,15 @@ public class ClassYearRepository:GenericRepository<ClassDomain.Entities.StageCla
         DbContext.SaveChanges();
         return true;
 
+    }
+
+    public bool Delete(ClassYearID Id)
+    {
+
+        DbContext.ClassYears.Where(x => x.Id == Id)
+            .ExecuteUpdate(setter => setter.SetProperty(x => x.DateDeleted, DateTime.Now));
+        DbContext.SaveChanges();
+        return true;
     }
 
 }

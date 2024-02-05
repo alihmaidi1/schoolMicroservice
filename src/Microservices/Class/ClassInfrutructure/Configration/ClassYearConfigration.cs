@@ -1,5 +1,7 @@
 using ClassDomain.Entities.Class;
+using ClassDomain.Entities.ClassYear;
 using ClassDomain.Entities.StageClass;
+using ClassDomain.Entities.StudentClass;
 using ClassDomain.Entities.Year;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -27,6 +29,16 @@ public class ClassYearConfigration:IEntityTypeConfiguration<ClassYear>
         builder.HasMany(x => x.Bills)
             .WithOne(x => x.ClassYear)
             .HasForeignKey(x=>x.ClassYearId);
+
         
+        builder.HasMany(x => x.Students)
+            .WithMany(x => x.ClassYears)
+            .UsingEntity<StudentClass>();
+
+        builder.HasMany(x => x.StudentClasses)
+            .WithOne(x=>x.ClassYear)
+            .HasForeignKey(x=>x.ClassYearId)
+            .OnDelete(DeleteBehavior.Cascade);
+
     }
 }

@@ -10,13 +10,13 @@ public class Year:BaseEntity<YearID>
     {
 
         Id = new YearID(Guid.NewGuid());
-        ClassYears = new HashSet<ClassYear>();
+        ClassYears = new HashSet<ClassYear.ClassYear>();
 
     }
     
     
     public string Name { get; set; }
     
-    public ICollection<ClassYear> ClassYears { get; set; } 
+    public ICollection<ClassYear.ClassYear> ClassYears { get; set; } 
     
 }

@@ -10,6 +10,8 @@ public class YearConfigration:IEntityTypeConfiguration<Year>
     {
 
         builder.HasKey(x => x.Id);
+
+        builder.HasQueryFilter(x => x.DateDeleted == null);
         builder
             .Property(x => x.Id)
             .HasConversion(x => x.Value, Value => new YearID(Value));

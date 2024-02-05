@@ -2,6 +2,7 @@ using Admin;
 using Api.Middleware;
 using Common.Api;
 using Common.Authorization.Handlers;
+using Common.Consul;
 using Common.ElasticSearch;
 using Common.Email;
 using Common.Enum;
@@ -33,6 +34,7 @@ builder.Services.AddHealthChecks()
 
 
 
+builder.Services.AddConsulConfigure(builder.Configuration);
 
 if (!Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT").Equals("Development"))
 {
@@ -118,6 +120,7 @@ app.UseHangfireDashboard("/hangfiredashboard");
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.RegisterWithConsul(app.Lifetime,builder.Configuration["AppName"],builder.WebHost.GetSetting(WebHostDefaults.ServerUrlsKey));
 app.MapControllers();
 
 app.Run();

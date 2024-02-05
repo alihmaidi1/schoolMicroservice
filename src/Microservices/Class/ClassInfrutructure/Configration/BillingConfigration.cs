@@ -1,5 +1,6 @@
 using ClassDomain.Entities.Bill;
 using ClassDomain.Entities.StageClass;
+using ClassDomain.Entities.StudentBill;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -11,8 +12,7 @@ public class BillingConfigration:IEntityTypeConfiguration<Bill>
     {
 
         builder.HasKey(x => x.Id);
-        
-        
+        builder.HasQueryFilter(x => x.DateDeleted == null);
         builder.Property(x => x.Id)
             .HasConversion(x => x.Value, Value => new BillID(Value));
 
@@ -22,6 +22,10 @@ public class BillingConfigration:IEntityTypeConfiguration<Bill>
         builder.HasMany(x => x.StudentBills)
             .WithOne(x => x.Bill)
             .HasForeignKey(x => x.BillId);
+
+        builder.HasMany(x => x.StudentClasses)
+            .WithMany(x => x.Bills)
+            .UsingEntity<StudentBill>();
 
     }
 }

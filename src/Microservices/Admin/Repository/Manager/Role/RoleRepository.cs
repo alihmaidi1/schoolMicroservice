@@ -6,6 +6,7 @@ using Domain.Entities.Manager.Role;
 using Domain.Enum;
 using Dto.Manager.Role;
 using Infrutructure;
+using Microsoft.EntityFrameworkCore;
 using Repository.Base;
 using Repository.Manager.Admin;
 using Repository.Manager.Admin.Operation;
@@ -74,10 +75,8 @@ public class RoleRepository:GenericRepository<Domain.Entities.Manager.Role.Role>
 
     public bool Delete(RoleID Id)
     {
-        DbContext.Roles.Remove(new Domain.Entities.Manager.Role.Role()
-        {
-            Id = Id
-        });
+        DbContext.Roles.Where(x => x.Id == Id)
+            .ExecuteUpdate(setter => setter.SetProperty(x => x.DateDeleted, DateTime.Now));
         DbContext.SaveChanges();
         return true;
 

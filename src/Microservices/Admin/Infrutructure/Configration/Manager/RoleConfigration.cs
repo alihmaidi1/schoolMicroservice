@@ -11,6 +11,7 @@ public class RoleConfigration:IEntityTypeConfiguration<Role>
     {
         
         builder.HasKey(Role => Role.Id);
+        builder.HasQueryFilter(x => x.DateDeleted == null);
         builder.Property(Role => Role.Id)
             .HasConversion(RoleID => RoleID.Value, Value => new RoleID(Value));
 

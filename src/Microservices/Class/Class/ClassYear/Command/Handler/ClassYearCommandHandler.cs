@@ -30,7 +30,7 @@ public class ClassYearCommandHandler:OperationResult,
     
     public async Task<JsonResult> Handle(AddClassYearCommand request, CancellationToken cancellationToken)
     {
-        ClassDomain.Entities.StageClass.ClassYear classYear = new ClassDomain.Entities.StageClass.ClassYear()
+        ClassDomain.Entities.ClassYear.ClassYear classYear = new ClassDomain.Entities.ClassYear.ClassYear()
         {
 
             YearId = request.YearID,
@@ -67,14 +67,9 @@ public class ClassYearCommandHandler:OperationResult,
     
     public async Task<JsonResult> Handle(DeleteClassYearCommand request, CancellationToken cancellationToken)
     {
-        
-        ClassDomain.Entities.StageClass.ClassYear classYear = new ClassDomain.Entities.StageClass.ClassYear()
-        {
 
-            Id = request.Id
 
-        };
-        await ClassYearRepository.DeleteAsync(classYear);
+        ClassYearRepository.Delete(request.Id);
         return Success("class year was deleted successfully");
     }
     

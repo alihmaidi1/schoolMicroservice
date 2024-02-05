@@ -32,9 +32,8 @@ public class YearRepository:GenericRepository<ClassDomain.Entities.Year.Year>,IY
 
     public bool Delete(YearID Id)
     {
-        //
-        // DbContext.Years.Where(x => x.Id == Id).ExecuteDelete();
-
+        DbContext.Years.Where(x=>x.Id==Id).ExecuteUpdate(setter => setter.SetProperty(x => x.DateDeleted, DateTime.Now));
+        DbContext.SaveChanges();
         return true;
     }
 

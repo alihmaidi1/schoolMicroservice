@@ -6,7 +6,7 @@ namespace Class.Repository.ClassYear;
 public static class ClassYearQuery
 {
     
-    public static Expression<Func<ClassDomain.Entities.StageClass.ClassYear, GetAllClassYearResponse>> ToGetAllClassYear = ClassYear =>
+    public static Expression<Func<ClassDomain.Entities.ClassYear.ClassYear, GetAllClassYearResponse>> ToGetAllClassYear = ClassYear =>
         new GetAllClassYearResponse()
         {
             Id = ClassYear.Id.Value,

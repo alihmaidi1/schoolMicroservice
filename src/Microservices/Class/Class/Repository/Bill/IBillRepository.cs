@@ -8,4 +8,6 @@ public interface IBillRepository:IgenericRepository<ClassDomain.Entities.Bill.Bi
 
 
     public bool IsExists(BillID Id);
+
+    public bool Delete(BillID Id);
 }

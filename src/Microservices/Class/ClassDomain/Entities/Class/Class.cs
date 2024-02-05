@@ -11,7 +11,7 @@ public class Class:BaseEntity<ClassID>
     {
 
         Id = new ClassID(Guid.NewGuid());
-        ClassYears = new HashSet<ClassYear>();
+        ClassYears = new HashSet<ClassYear.ClassYear>();
     }
     
     public string Name { get; set; }
@@ -21,6 +21,6 @@ public class Class:BaseEntity<ClassID>
     public Stage.Stage Stage { get; set; }
     
     
-    public ICollection<ClassYear > ClassYears { get; set; }
+    public ICollection<ClassYear.ClassYear > ClassYears { get; set; }
     
 }
