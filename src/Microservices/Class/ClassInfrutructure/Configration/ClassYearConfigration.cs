@@ -40,5 +40,10 @@ public class ClassYearConfigration:IEntityTypeConfiguration<ClassYear>
             .HasForeignKey(x=>x.ClassYearId)
             .OnDelete(DeleteBehavior.Cascade);
 
+        builder.HasMany(x => x.Semesters)
+            .WithOne(x => x.ClassYear)
+            .HasForeignKey(x=>x.ClassYearId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
     }
 }

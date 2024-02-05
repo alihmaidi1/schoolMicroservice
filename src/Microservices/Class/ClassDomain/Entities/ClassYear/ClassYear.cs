@@ -14,6 +14,7 @@ public class ClassYear:BaseEntity<ClassYearID>
         Id = new ClassYearID(Guid.NewGuid());
         Bills = new HashSet<Bill.Bill>();
 
+        Semesters = new HashSet<Semester.Semester>();
         Students = new HashSet<Student.Student>();
         StudentClasses = new HashSet<StudentClass.StudentClass>();
 
@@ -29,6 +30,8 @@ public class ClassYear:BaseEntity<ClassYearID>
     
     public Year.Year Year { get; set; }
     public ICollection<Bill.Bill>  Bills { get; set; }
+    
+    public ICollection<Semester.Semester> Semesters { get; set; } 
     
     public ICollection<StudentClass.StudentClass> StudentClasses { get; set; }
     

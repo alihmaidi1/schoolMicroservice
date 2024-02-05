@@ -1,4 +1,5 @@
 using ClassDomain.Entities.StageClass;
+using ClassDomain.Entities.StudentBill;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ClassInfrutructure.Seed;
@@ -23,6 +24,11 @@ public static class ClassDatabasebSeed
             await YearSeeder.seedData(context);
             await ClassYearSeeder.seedData(context);
             await BillSeeder.seedData(context);
+            await SemesterSeeder.seedData(context);
+            await ParentSeeder.seedData(context);
+            await StudentSeeder.seedData(context);
+            await StudentClassSeeder.seedData(context);
+            await StudentBillSeeder.seedData(context);
             await transaction.CommitAsync();
 
             
