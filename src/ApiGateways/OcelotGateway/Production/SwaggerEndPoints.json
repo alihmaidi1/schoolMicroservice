@@ -24,7 +24,12 @@
 
         "Name": "Teacher Documentation microservice",
         "Version": "v1",
-        "Url": "http://teacherapi/swagger/teacher/swagger.json"
+
+        "Service": {
+          "Name": "Teacher",
+          "Path": "/swagger/teacher/swagger.json"
+        }
+
 
 
       }]
