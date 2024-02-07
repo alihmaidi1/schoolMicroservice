@@ -15,8 +15,7 @@ public class ParentConfigration:IEntityTypeConfiguration<Parent>
 
         builder.HasMany(x => x.Students)
             .WithOne(x => x.Parent)
-            .HasForeignKey(x => x.ParentId)
-            .OnDelete(DeleteBehavior.SetNull);
+            .HasForeignKey(x => x.ParentId);
 
 
     }

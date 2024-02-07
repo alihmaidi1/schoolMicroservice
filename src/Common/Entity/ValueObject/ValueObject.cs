@@ -25,7 +25,7 @@ public abstract class ValueObject
 
         var other = (ValueObject)obj;
 
-        return this.GetValues().SequenceEqual(other.GetValues());
+        return GetValues().SequenceEqual(other.GetValues());
     }
 
     public abstract IEnumerable<object> GetValues();

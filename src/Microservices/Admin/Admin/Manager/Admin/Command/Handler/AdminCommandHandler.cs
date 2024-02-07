@@ -51,7 +51,7 @@ public class AdminCommandHandler:OperationResult,
              Name = request.Name
          };
          
-         // await _publisher.Publish(addAdminEvent); 
+         await _publisher.Publish(addAdminEvent); 
          return Success("admin was added successfully");
         
     }
@@ -69,7 +69,7 @@ public class AdminCommandHandler:OperationResult,
             Id = request.AdminId,
             Name = request.Name
         };
-        // await _publisher.Publish(UpdateAdminEvent);
+        await _publisher.Publish(UpdateAdminEvent);
         
         
         return Success("admin was updated successfully");

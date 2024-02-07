@@ -110,7 +110,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 
-app.RegisterWithConsul(app.Lifetime,builder.Configuration["AppName"],builder.WebHost.GetSetting(WebHostDefaults.ServerUrlsKey));
+app.RegisterWithConsul(app.Lifetime,builder.Configuration["AppName"],builder.Configuration["url"]);
 app.MapControllers();
 
 app.Run();

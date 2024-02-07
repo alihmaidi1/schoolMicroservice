@@ -1,11 +1,8 @@
-using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text.Json;
 using Common.Exceptions;
 using Common.OperationResult.Base;
 using Microsoft.AspNetCore.Http;
-
-using FluentValidation;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ValidationException = FluentValidation.ValidationException;
@@ -56,7 +53,7 @@ public static class ActionMethods
 
                     
                     case DbUpdateException exception:
-
+                    
                         var innerexception = exception.InnerException;
                         if (innerexception is SqlException&& ((SqlException)(innerexception)).ErrorCode==-2146232060)
                         {
@@ -64,7 +61,7 @@ public static class ActionMethods
                             Result.StatusCode= (int)HttpStatusCode.InternalServerError;
                             response.StatusCode= (int)HttpStatusCode.InternalServerError;
                             break;
-    
+                    
                         }
                         else
                         {

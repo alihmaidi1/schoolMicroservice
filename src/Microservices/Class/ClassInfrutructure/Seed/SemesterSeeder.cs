@@ -18,7 +18,6 @@ public static class SemesterSeeder
                 .GetSemesterFaker(classYears)
                 .Generate(20)
                 .DistinctBy(x => new { x.Name, x.ClassYearId })
-                
                 .ToList();
             context.Semesters.AddRange(semesters);
             context.SaveChanges();

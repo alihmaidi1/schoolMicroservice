@@ -25,7 +25,7 @@ public class ApplicationDbContext:DbContext
     public ApplicationDbContext(DbContextOptions option) :base(option)
     {
 
-        EncryptionProvider = new GenerateEncryptionProvider("45sdfow3sdfsd42joir53");
+        EncryptionProvider = new GenerateEncryptionProvider("45sdfodsfw3sdfsd42joir53");
             
 
     }

@@ -24,11 +24,11 @@ public class StudentBillConfiration:IEntityTypeConfiguration<StudentBill>
 
         builder.HasOne(x => x.StudentClass)
             .WithMany(x => x.StudentBills)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(x => x.Bill)
             .WithMany(x => x.StudentBills)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
         
     }
 }

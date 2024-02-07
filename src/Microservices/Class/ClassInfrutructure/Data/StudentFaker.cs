@@ -13,7 +13,7 @@ public static class StudentFaker
         var student = new Faker<Student>();
         student.RuleFor(x => x.Name, setter => setter.Random.Word());
         student.RuleFor(x => x.Email, setter => setter.Internet.Email());
-        student.RuleFor(x => x.Password, setter => setter.Internet.Password());
+        student.RuleFor(x => x.Password, setter => "12345678");
         student.RuleFor(x => x.ParentId, setter => setter.PickRandom(parents).Id);
         return student;
     }

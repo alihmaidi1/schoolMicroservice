@@ -92,5 +92,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-app.RegisterWithConsul(app.Lifetime,builder.Configuration["AppName"],builder.WebHost.GetSetting(WebHostDefaults.ServerUrlsKey));
+app.RegisterWithConsul(app.Lifetime,builder.Configuration["AppName"],builder.Configuration["url"]);
 app.Run();

@@ -30,6 +30,7 @@ public static class ConsulRegistration
     {
         
         var ConsulClient = app.ApplicationServices.GetRequiredService<IConsulClient>();
+        Console.WriteLine(Url);
         var uri = new Uri(Url);
         
         var registration = new AgentServiceRegistration()

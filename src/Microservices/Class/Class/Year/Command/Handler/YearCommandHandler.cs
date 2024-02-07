@@ -44,7 +44,7 @@ public class YearCommandHandler:OperationResult,
 
         };
 
-        // await _publisher.Publish(addYearEvent);
+        await _publisher.Publish(addYearEvent);
         return Success(" year was added successfully");
     }
 
@@ -63,7 +63,7 @@ public class YearCommandHandler:OperationResult,
             Name = request.Name
 
         };
-        // await _publisher.Publish(updateYearEvent);
+        await _publisher.Publish(updateYearEvent);
         return Success("year was updated successfully");
     }
 

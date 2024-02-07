@@ -12,7 +12,7 @@ public static class ParentFaker
         var parent = new Faker<Parent>();
         parent.RuleFor(x=>x.Name,setter=>setter.Random.Word());
         parent.RuleFor(x => x.Email, setter => setter.Internet.Email());
-        parent.RuleFor(x => x.Password, setter => setter.Internet.Password());
+        parent.RuleFor(x => x.Password, setter => "12345678");
         
         
 

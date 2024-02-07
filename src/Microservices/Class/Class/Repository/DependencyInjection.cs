@@ -3,7 +3,6 @@ using Class.Repository.Bill;
 using Class.Repository.Class;
 using Class.Repository.ClassYear;
 using Class.Repository.Stage;
-using Class.Repository.Subject;
 using Class.Repository.Year;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,7 +20,6 @@ public static class DependencyInjection
         services.AddTransient<IYearRepository,YearRepository>();
         services.AddTransient<IClassRepository,ClassRepository>();
         services.AddTransient<IBillRepository,Billrepository>();
-        services.AddTransient<ISubjectRepository,SubjectRepository>();
 
         services.AddTransient<IClassYearRepository,ClassYearRepository>();
         return services;
