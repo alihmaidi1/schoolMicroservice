@@ -1,5 +1,8 @@
 using Class.Repository.Base;
+using ClassDomain.Dto.Bill;
 using ClassDomain.Dto.ClassYear;
+using ClassDomain.Dto.Semester;
+using ClassDomain.Dto.Student;
 using ClassDomain.Entities.Bill;
 using ClassDomain.Entities.Class;
 using ClassDomain.Entities.StageClass;
@@ -54,5 +57,50 @@ public class ClassYearRepository:GenericRepository<ClassDomain.Entities.ClassYea
         DbContext.SaveChanges();
         return true;
     }
+
+    public GetClassYearResponse GetClassYear(ClassYearID classYearId)
+    {
+
+        var Result=DbContext
+            .ClassYears
+            .Include(x=>x.Bills)
+            .Include(x=>x.Semesters)
+            .Include(x=>x.Class)
+            .Include(x=>x.Year)
+            .Include(x=>x.Students)
+            .Select(x=>new GetClassYearResponse()
+            {
+                
+                Id = x.Id,
+                ClassName = x.Class.Name,
+                YearName = x.Year.Name,
+                Students = x.Students.Select(y=>new GetStudentClassResponse()
+                {
+                    
+                    Id = y.Id,
+                    Name = y.Name
+                    
+                }).ToList(),
+                Semesters = x.Semesters.Select(y=>new GetSemesterResponse()
+                {
+                    
+                    Id = y.Id,
+                    Name = y.Name,
+                }).ToList(),
+                Bills = x.Bills.Select(y=>new GetBillResponse()
+                {
+                    
+                    Id = y.Id,
+                    Money = y.Money,
+                    Date = y.Date,
+                    
+                }).ToList()
+                
+            })
+            .First(x=>x.Id==classYearId);
+        return Result;
+
+    }
+
 
 }

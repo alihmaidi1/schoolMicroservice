@@ -2,6 +2,8 @@ using System.Reflection;
 using Class.Repository.Bill;
 using Class.Repository.Class;
 using Class.Repository.ClassYear;
+using Class.Repository.Parent;
+using Class.Repository.Semester;
 using Class.Repository.Stage;
 using Class.Repository.Year;
 using FluentValidation;
@@ -20,8 +22,9 @@ public static class DependencyInjection
         services.AddTransient<IYearRepository,YearRepository>();
         services.AddTransient<IClassRepository,ClassRepository>();
         services.AddTransient<IBillRepository,Billrepository>();
-
+        services.AddTransient<ISemesterRepository, SemesterRepository>();
         services.AddTransient<IClassYearRepository,ClassYearRepository>();
+        services.AddTransient<IParentRepository,ParentRepository>();
         return services;
 
         

@@ -142,8 +142,8 @@
     image: rabbitmq:3-management
     restart: always
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - "5673:5672"
+      - "15673:15672"
   classapi:
     image: alihmaidi/classapi
     container_name: classapi

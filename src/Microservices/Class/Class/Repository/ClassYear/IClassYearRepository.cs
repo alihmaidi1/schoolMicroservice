@@ -17,5 +17,7 @@ public interface IClassYearRepository:IgenericRepository<ClassDomain.Entities.Cl
     public bool Update(ClassYearID Id ,List<ClassDomain.Entities.Bill.Bill> bills);
     public PageList<GetAllClassYearResponse> GetAllClassYear(ClassID id, int? pageNumber, int? pageSize);
 
-    
+
+    public GetClassYearResponse GetClassYear(ClassYearID classYearId);
+
 }

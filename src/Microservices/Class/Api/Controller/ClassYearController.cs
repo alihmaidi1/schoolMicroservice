@@ -37,6 +37,14 @@ public class ClassYearController:ApiController
     }
     
     
+    [HttpGet(ClassYearRouter.get)]
+    // [AppAuthorize(AuthenticationSchemes = nameof(JwtSchema.JwtAdmin))]
+    public async Task<IActionResult> GetClassYear([FromQuery] GetClassYearQuery command,CancellationToken Token)
+    {
+        var response = await this.Mediator.Send(command,Token);
+        return response;
+    }
+    
     
     [HttpDelete(ClassYearRouter.prefix)]
     // [AppAuthorize(AuthenticationSchemes = nameof(JwtSchema.JwtAdmin))]
