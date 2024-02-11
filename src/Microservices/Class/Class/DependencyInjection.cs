@@ -18,10 +18,10 @@ public static class DependencyInjection
         
         services.AddMassTransit(config =>
         {
-
             
             config.UsingRabbitMq((context, configure) =>
             {
+                configure.UseMessageRetry(r=>r.Immediate(5));
                 configure.Host(configuration["Rabbitmq"]);
                 
             });

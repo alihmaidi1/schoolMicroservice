@@ -50,7 +50,6 @@ public class AdminCommandHandler:OperationResult,
              Id = id,
              Name = request.Name
          };
-         
          await _publisher.Publish(addAdminEvent); 
          return Success("admin was added successfully");
         

@@ -25,32 +25,32 @@ public static class DependencyInjection
             
             
             config.AddConsumer<AddYearConsumer>();
-
             config.AddConsumer<UpdateYearConsumer>();
+            
             config.UsingRabbitMq((context, configure) =>
             {
+                
+                
+                
                 configure.Host(configuration["Rabbitmq"]);
+                configure.UseMessageRetry(r=>r.Immediate(5));
                 configure.ReceiveEndpoint(EventBusConstants.AdminQueue, c =>
                 {
                     c.ConfigureConsumer<AddAdminConsumer>(context);
                     c.ConfigureConsumer<UpdateAdminConsumer>(context);
-
-                    c.ConfigureConsumer<AddYearConsumer>(context);
-                    c.ConfigureConsumer<UpdateYearConsumer>(context);
-
-                    // c.ConfigureConsumer<UpdateAdminConsumer>(context);
-                    // c.ConfigureConsumer<DeleteAdminConsumer>(context);
-
+                  //  c.ConfigureConsumer<UpdateAdminConsumer>(context);
+                //    c.ConfigureConsumer<DeleteAdminConsumer>(context);
                     
                 });
                 
+                
+                configure.ReceiveEndpoint(EventBusConstants.YearQueue, c =>
+                {
+                    
+                    c.ConfigureConsumer<AddYearConsumer>(context);
+                    c.ConfigureConsumer<UpdateYearConsumer>(context);
+                });
             });
-            
-            services.AddScoped<AddAdminConsumer>();
-            services.AddScoped<UpdateAdminConsumer>();
-            
-            services.AddScoped<AddYearConsumer>();
-            services.AddScoped<UpdateYearConsumer>();
 
         });
         
