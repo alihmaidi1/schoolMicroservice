@@ -1,8 +1,11 @@
+using System.Reflection;
 using Common.Email;
+using Common.Entity.Interface;
 using Common.Redis;
 using Hangfire;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Repository.Base;
 using Repository.Manager.Admin;
 using Repository.Manager.Jwt;
 using Repository.Manager.Jwt.Factory;
@@ -17,6 +20,13 @@ public static class dependencyInjection
 
         services.AddHangfire(x => x.UseSqlServerStorage(configuration["ConnectionStrings:DefaultConnection"]));
         services.AddHangfireServer();
+
+        services.Scan(selector=>
+            selector.FromAssemblies(Assembly.GetExecutingAssembly())
+                .AddClasses(c=>c.AssignableTo(typeof(basesuper)))
+                .AsSelfWithInterfaces()
+                .WithTransientLifetime()
+        );
         services.AddTransient<ICacheRepository,CacheRepository>();
         services.AddTransient<IAdminRepository,AdminRepository>();
         services.AddTransient<IMailService, MailService>();

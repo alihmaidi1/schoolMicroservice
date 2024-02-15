@@ -1,9 +1,10 @@
 
+using Common.Entity.Interface;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Domain.Repository.Base;
 
-public interface IgenericRepository<T> where T : class
+public interface IgenericRepository<T> :basesuper where T : class
 {
     
     
@@ -20,11 +21,6 @@ public interface IgenericRepository<T> where T : class
 
     IQueryable<T> GetTableAsNoTracking();
     IQueryable<T> GetTableAsTracking();
-
-
-
-
-
-
     
 }
+

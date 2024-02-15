@@ -1,3 +1,6 @@
+using System.Reflection;
+using Common.Entity.Interface;
+using Domain.Repository.Base;
 using Domain.Repository.Vacation;
 using Domain.Repository.Warning;
 using Domain.Repository.Year;
@@ -12,15 +15,13 @@ public static class dependencyInjection
     public static IServiceCollection AddRepository(this IServiceCollection services)
     {
      
-        services.AddTransient<ITeacherRepository, TeacherRepository>();
-        services.AddTransient<IManagerRepository, ManagerRepository>();
-
-        services.AddTransient<IWarningRepository, WarningRepository>();
         
-        services.AddTransient<IYearRepository, YearRepository>();
-
-        services.AddTransient<IVacationRepository, VacationRepository>();
-
+        services.Scan(selector=>
+            selector.FromAssemblies(Assembly.GetExecutingAssembly())
+                .AddClasses(c=>c.AssignableTo(typeof(basesuper)))
+                .AsSelfWithInterfaces()
+                .WithScopedLifetime()
+        );
         return services;
 
     }

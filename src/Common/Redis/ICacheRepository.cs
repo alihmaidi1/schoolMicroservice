@@ -1,6 +1,8 @@
+using Common.Entity.Interface;
+
 namespace Common.Redis;
 
-public interface ICacheRepository
+public interface ICacheRepository :basesuper
 {
     
     public T GetData<T>(string key);

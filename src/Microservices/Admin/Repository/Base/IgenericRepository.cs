@@ -1,8 +1,9 @@
+using Common.Entity.Interface;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Repository.Base;
 
-public interface IgenericRepository<T> where T : class
+public interface IgenericRepository<T> : basesuper where T : class
 {
     
     
@@ -27,3 +28,4 @@ public interface IgenericRepository<T> where T : class
 
     
 }
+

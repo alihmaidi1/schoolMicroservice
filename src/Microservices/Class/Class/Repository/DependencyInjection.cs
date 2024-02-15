@@ -1,4 +1,5 @@
 using System.Reflection;
+using Class.Repository.Base;
 using Class.Repository.Bill;
 using Class.Repository.Class;
 using Class.Repository.ClassYear;
@@ -6,6 +7,7 @@ using Class.Repository.Parent;
 using Class.Repository.Semester;
 using Class.Repository.Stage;
 using Class.Repository.Year;
+using Common.Entity.Interface;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,13 +20,13 @@ public static class DependencyInjection
     {
 
 
-        services.AddTransient<IStageRepository,StageRepository>();
-        services.AddTransient<IYearRepository,YearRepository>();
-        services.AddTransient<IClassRepository,ClassRepository>();
-        services.AddTransient<IBillRepository,Billrepository>();
-        services.AddTransient<ISemesterRepository, SemesterRepository>();
-        services.AddTransient<IClassYearRepository,ClassYearRepository>();
-        services.AddTransient<IParentRepository,ParentRepository>();
+
+        services.Scan(selector=>
+            selector.FromAssemblies(Assembly.GetExecutingAssembly())
+                .AddClasses(c=>c.AssignableTo(typeof(basesuper)))
+                .AsSelfWithInterfaces()
+                .WithScopedLifetime()
+        );
         return services;
 
         
