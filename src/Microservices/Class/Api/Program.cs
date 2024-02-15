@@ -29,6 +29,8 @@ builder.Services.AddControllers();
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
 
+builder.Services.AddApiVersioning();
+
 builder.Services.AddConsulConfigure(builder.Configuration);
 builder.Services.AddTransient<ICacheRepository,CacheRepository>();
 

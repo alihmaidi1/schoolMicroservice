@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controller;
 
+[ApiVersion("1")]
 public class YearController:ApiController
 {
     
@@ -39,9 +40,12 @@ public class YearController:ApiController
     
     [HttpGet(YearRouter.prefix)]
     // [AppAuthorize(AuthenticationSchemes = nameof(JwtSchema.JwtAdmin))]
-    public async Task<IActionResult> DeleteYear([FromQuery] GetAllYearQuery command,CancellationToken Token)
+    public async Task<IActionResult> GetAllYear([FromQuery] GetAllYearQuery command,CancellationToken Token)
     {
         var response = await this.Mediator.Send(command,Token);
         return response;
     }
+    
+
+
 }

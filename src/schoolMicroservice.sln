@@ -6,7 +6,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateways", "ApiGateways"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservices", "Microservices", "{2C833976-77E7-4DA2-9A6D-1BC84AE4EA44}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Admin", "Admin", "{F7F70D19-35D6-475F-B451-9926E76160CB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer", "IdentityServer", "{F7F70D19-35D6-475F-B451-9926E76160CB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Microservices\Admin\Api\Api.csproj", "{AE60F65A-7ED5-491E-8FC1-7802C3B5995D}"
 EndProject

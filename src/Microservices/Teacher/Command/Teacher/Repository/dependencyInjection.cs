@@ -23,6 +23,5 @@ public static class dependencyInjection
                 .WithScopedLifetime()
         );
         return services;
-
     }
 }

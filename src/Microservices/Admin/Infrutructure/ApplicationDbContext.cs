@@ -1,4 +1,5 @@
 using System.Reflection;
+using Domain.Entities;
 using Domain.Entities.Manager.Admin;
 using Domain.Entities.Manager.Role;
 using EntityFrameworkCore.EncryptColumn.Extension;
@@ -38,6 +39,12 @@ public class ApplicationDbContext:DbContext
     
     public DbSet<Admin> Admins { get; set; }
 
+    
+    public DbSet<Student> Students { get; set; }
+    
+    public DbSet<Parent> Parents { get; set; }
+    
+    public DbSet<Teacher> Teachers { get; set; }
     public DbSet<Role> Roles { get; set; }
 
     public DbSet<AdminRefreshToken> AdminRefreshTokens { get; set; }

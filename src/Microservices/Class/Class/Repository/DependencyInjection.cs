@@ -7,6 +7,8 @@ using Class.Repository.Parent;
 using Class.Repository.Semester;
 using Class.Repository.Stage;
 using Class.Repository.Year;
+using Common;
+using Common.Email;
 using Common.Entity.Interface;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,13 +24,14 @@ public static class DependencyInjection
 
 
         services.Scan(selector=>
-            selector.FromAssemblies(Assembly.GetExecutingAssembly())
+            selector.FromAssemblies(Assembly.GetExecutingAssembly(),
+                    CommonAssymbly.CommonAssemblyConst)
                 .AddClasses(c=>c.AssignableTo(typeof(basesuper)))
                 .AsSelfWithInterfaces()
-                .WithScopedLifetime()
+                .WithTransientLifetime()
         );
+        // services.AddTransient<IMailService, MailService>();
         return services;
-
         
     }
 

@@ -1,4 +1,5 @@
 using System.Reflection;
+using Domain.Entities;
 using Domain.Entities.Manager;
 using Domain.Entities.Teacher;
 using Domain.Entities.Vacation;

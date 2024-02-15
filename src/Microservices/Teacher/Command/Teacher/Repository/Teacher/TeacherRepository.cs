@@ -4,7 +4,6 @@ using Common.Repository;
 using Domain.Dto.Teacher;
 using Domain.Entities.Teacher;
 using infrutructure;
-using Infrutructure;
 using Microsoft.EntityFrameworkCore;
 using Repository.Base;
 using Teacher.Repository.Teacher;

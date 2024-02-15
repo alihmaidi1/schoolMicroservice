@@ -1,36 +1,39 @@
 using ClassDomain.AppMetaData;
-using ClassDomain.Model.Bill.Command;
+using ClassDomain.Model.Student.Command;
+using ClassDomain.Model.Student.Query;
+using ClassDomain.Model.Year.Command;
 using Common.Api;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controller;
 
-
-// [ApiVersion("1")]
-public class BillController:ApiController
+public class StudentController:ApiController
 {
     
-    [HttpPost(BillRouter.prefix)]
+    
+    [HttpPost(StudentRouter.prefix)]
     // [AppAuthorize(AuthenticationSchemes = nameof(JwtSchema.JwtAdmin))]
-    public async Task<IActionResult> AddBill([FromBody] AddBillToClassYearCommand command,CancellationToken Token)
+    public async Task<IActionResult> AddStudent([FromBody] AddStudentCommand command,CancellationToken Token)
+    {
+        var response = await this.Mediator.Send(command,Token);
+        return response;
+    }
+
+    
+    
+    [HttpPut(StudentRouter.prefix)]
+    // [AppAuthorize(AuthenticationSchemes = nameof(JwtSchema.JwtAdmin))]
+    public async Task<IActionResult> UpdateStudent([FromBody] UpdateStudentCommand command,CancellationToken Token)
     {
         var response = await this.Mediator.Send(command,Token);
         return response;
     }
     
     
-    [HttpPut(BillRouter.prefix)]
-    // [AppAuthorize(AuthenticationSchemes = nameof(JwtSchema.JwtAdmin))]
-    public async Task<IActionResult> updateBill([FromBody] UpdatebillCommand command,CancellationToken Token)
-    {
-        var response = await this.Mediator.Send(command,Token);
-        return response;
-    }
     
-    
-    [HttpDelete(BillRouter.prefix)]
+    [HttpGet(StudentRouter.prefix)]
     // [AppAuthorize(AuthenticationSchemes = nameof(JwtSchema.JwtAdmin))]
-    public async Task<IActionResult> Deletebill([FromQuery] DeleteBillCommand command,CancellationToken Token)
+    public async Task<IActionResult> GetAllStudent([FromQuery]GetAllStudentQuery command,CancellationToken Token)
     {
         var response = await this.Mediator.Send(command,Token);
         return response;

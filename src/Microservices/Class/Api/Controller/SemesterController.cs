@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controller;
 
+
 public class SemesterController:ApiController
 {
     

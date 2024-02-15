@@ -1,4 +1,5 @@
 using System.Reflection;
+using Common;
 using Common.Email;
 using Common.Entity.Interface;
 using Common.Redis;
@@ -22,16 +23,19 @@ public static class dependencyInjection
         services.AddHangfireServer();
 
         services.Scan(selector=>
-            selector.FromAssemblies(Assembly.GetExecutingAssembly())
+            selector.FromAssemblies(Assembly.GetExecutingAssembly(),
+                    CommonAssymbly.CommonAssemblyConst)
                 .AddClasses(c=>c.AssignableTo(typeof(basesuper)))
                 .AsSelfWithInterfaces()
                 .WithTransientLifetime()
         );
-        services.AddTransient<ICacheRepository,CacheRepository>();
-        services.AddTransient<IAdminRepository,AdminRepository>();
-        services.AddTransient<IMailService, MailService>();
-        services.AddTransient<ISchemaFactory, SchemaFactory>();
-        services.AddTransient<IRoleRepository,RoleRepository>();
+        
+        
+        // services.AddTransient<ICacheRepository,CacheRepository>();
+        // services.AddTransient<IAdminRepository,AdminRepository>();
+        // services.AddTransient<IMailService, MailService>();
+        // services.AddTransient<ISchemaFactory, SchemaFactory>();
+        // services.AddTransient<IRoleRepository,RoleRepository>();
         return services;
 
         
