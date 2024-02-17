@@ -9,4 +9,9 @@ public class GetAllStudentResponse
     
     public string ParentName { get; set; }
     
+    public bool Gender { get; set; }
+    
+    public int Number { get; set; }
+    
+    
 }

@@ -15,6 +15,36 @@ public class StudentRepository:GenericRepository<ClassDomain.Entities.Student.St
     }
 
 
+    public bool IsExists(int Number)
+    {
+        
+        return DbContext.Students.Any(x=>x.Number==Number);
+    }
+
+    public bool IsExists(StudentID Id)
+    {
+
+        return DbContext.Students.Any(x=>x.Id==Id);
+    }
+
+    public bool Delete(StudentID id)
+    {
+
+         DbContext.Students.Where(x => x.Id == id)
+            .ExecuteUpdate(setter => setter.SetProperty(x => x.DateDeleted, DateTime.Now));
+         DbContext.SaveChanges();
+         
+         return true;
+    }
+
+
+    public bool IsExists(StudentID Id, int Number)
+    {
+
+        return DbContext.Students.Any(x => x.Number == Number && x.Id != Id);
+
+    }
+
     public bool IsExists(string Email)
     {
 
@@ -45,7 +75,9 @@ public class StudentRepository:GenericRepository<ClassDomain.Entities.Student.St
             
             Id = x.Id,
             Name = x.Name,
-            ParentName = x.Parent.Name
+            ParentName = x.Parent.Name,
+            Number = x.Number,
+            Gender = x.Gender
             
         })
         .ToPagedList(pageNumber,pageSize);

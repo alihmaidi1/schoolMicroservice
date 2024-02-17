@@ -14,6 +14,15 @@ public interface IStudentRepository:IgenericRepository<ClassDomain.Entities.Stud
     public bool IsExists(StudentID Id ,string Email);
 
 
+    public bool IsExists(int Number);
+
+    public bool IsExists(StudentID Id,int Number);
+
+    public bool IsExists(StudentID Id);
+
+
+    public bool Delete(StudentID id);
+    
     public PageList<GetAllStudentResponse> GetAll(string? OrderBy, int? pageNumber, int? pageSize,string? Name,string? ParentName);
 
 }

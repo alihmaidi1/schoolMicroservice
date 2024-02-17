@@ -9,7 +9,6 @@ using Common.Enum;
 using Common.Jwt;
 using Common.Opentelemetry;
 using Common.Swagger;
-using Domain.Enum;
 using Hangfire;
 using HealthChecks.UI.Client;
 using Infrutructure;
@@ -28,20 +27,27 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 builder.Services.AddHealthChecks()
-    .AddSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"],failureStatus:HealthStatus.Degraded)
-    .AddRedis(builder.Configuration["RedisConnection"],failureStatus:HealthStatus.Degraded)
+    .AddSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]??"",failureStatus:HealthStatus.Degraded)
+    .AddRedis(builder.Configuration["RedisConnection"]??"",failureStatus:HealthStatus.Degraded)
     .AddHangfire(null);
 
-
-
 builder.Services.AddConsulConfigure(builder.Configuration);
+
+
+
+
+
+
+
+
+
+
 
 if (!Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT").Equals("Development"))
 {
     builder.Services.AddteleMetry(builder.Configuration);
     builder.Host.AddElasticSearchLogging();
 }
-
 
 
 
@@ -65,13 +71,14 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddJwtConfigration(builder.Configuration,JwtSchema.JwtAdmin.ToString(),JwtSchema.JwtAdmin.ToString(),JwtSchema.JwtResetAdmin.ToString());
 
 
+
 builder.Services.AddServices();
 
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen().AddOpenApi("admin","admin dashboard","v1","admin description deocument");
+builder.Services.AddOpenApi("admin","admin dashboard","v1","admin description deocument");
 
 builder.Services.AddHttpClient();
 
@@ -85,18 +92,13 @@ if (!app.Environment.IsDevelopment())
     
 }
 
-// Configure the HTTP request pipeline.
-// if (app.Environment.IsDevelopment())
-// {
 
 
     using(var scope= app.Services.CreateScope()){
         await DatabaseSeed.InitializeAsync(scope.ServiceProvider);
     }
     app.ConfigureOpenAPI("admin");
-    app.UseSwagger();
-    app.UseSwaggerUI();
-// }
+
 
 
 app.UseMiddleware<ErrorHandling>();
@@ -116,11 +118,15 @@ app.MapHealthChecks("/_healthcheck",new HealthCheckOptions()
 });
 
 
+app.UseIdentityServer();
+
 app.UseHangfireDashboard("/hangfiredashboard");
 app.UseAuthentication();
 app.UseAuthorization();
 
+
 app.RegisterWithConsul(app.Lifetime,builder.Configuration["AppName"],builder.Configuration["url"]);
 app.MapControllers();
+
 
 app.Run();

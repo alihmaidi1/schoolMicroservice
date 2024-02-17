@@ -44,6 +44,27 @@ public class UpdateStudentValidation:AbstractValidator<UpdateStudentCommand>
             .WithMessage("parent id should be not empty")
             .Must(id=>parentRepository.IsExists(id))
             .WithMessage("parent id is not exists in our data");
+
+        
+        RuleFor(x=>x.Number)
+            .NotEmpty()
+            .WithMessage("number should be not empty")
+            .NotNull()
+            .WithMessage("number should be not null");
+
+
+        RuleFor(x => x)
+            .Must(x=>!studentRepository.IsExists(x.Id,x.Number))
+            .WithMessage("this number is already exists in our data")
+            .OverridePropertyName("Number");
+        
+        
+        RuleFor(x => x.Gender)
+            .NotEmpty()
+            .WithMessage("gender should be not empty")
+            .NotNull()
+            .WithMessage("gender should be not null");
+
     }
     
 }

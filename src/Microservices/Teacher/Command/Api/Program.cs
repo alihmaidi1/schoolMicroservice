@@ -28,14 +28,21 @@ builder.Services.AddControllers();
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 builder.Services.AddTeacher(builder.Configuration);
 
+
+
+
+
+
 builder.Services.AddTransient<ICacheRepository,CacheRepository>();
+
 
 builder.Services.AddHangfire(x => x.UseSqlServerStorage(builder.Configuration["ConnectionStrings:DefaultConnection"]));
 builder.Services.AddHangfireServer();
+
+
 builder.Services.AddHealthChecks()
      .AddSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]??"null", failureStatus: HealthStatus.Degraded)
      .AddRedis(builder.Configuration["RedisConnection"]??"", failureStatus: HealthStatus.Degraded)
-     
      .AddConsul(options =>
 {
      var Consul=builder.Configuration["Consul:Address"]??"http://localhost:8500";
@@ -72,7 +79,7 @@ builder.Services.AddHealthChecks()
 
 
      builder.Services.AddEndpointsApiExplorer();
-     builder.Services.AddSwaggerGen().AddOpenApi("teacher","Teacher Service","v1","Teacher description deocument");
+     builder.Services.AddOpenApi("teacher","Teacher Service","v1","Teacher description deocument");
      builder.Services.AddHttpClient();
 
 

@@ -14,6 +14,7 @@ namespace Teacherinfrutructure;
 
 public class ApplicationDbContext:DbContext
 {
+    
     public IEncryptionProvider EncryptionProvider { get; set; }
 
     

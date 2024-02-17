@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Versioning;
+using Asp.Versioning;
+using Common.Swagger;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Common.Versioning;
@@ -14,15 +14,22 @@ public static class Versioning
         services.AddApiVersioning(option =>
         {
 
-            option.DefaultApiVersion = new ApiVersion(1,0);
-            option.ReportApiVersions = true;
             option.AssumeDefaultVersionWhenUnspecified = true;
-            option.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader(),
+            option.DefaultApiVersion = new ApiVersion(1,0);
+
+            option.ReportApiVersions = true;
+            option.ApiVersionReader = ApiVersionReader.Combine(
+                new QueryStringApiVersionReader("x-api-version"),
                 new HeaderApiVersionReader("x-api-version"),
                 new MediaTypeApiVersionReader("x-api-version"));
 
+        }).AddApiExplorer(option =>
+        {
+
+            
         });
 
+        
 
 
         return services;

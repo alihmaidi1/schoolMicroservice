@@ -21,7 +21,6 @@ public static class dependencyInjection
 
         services.AddHangfire(x => x.UseSqlServerStorage(configuration["ConnectionStrings:DefaultConnection"]));
         services.AddHangfireServer();
-
         services.Scan(selector=>
             selector.FromAssemblies(Assembly.GetExecutingAssembly(),
                     CommonAssymbly.CommonAssemblyConst)
@@ -29,13 +28,6 @@ public static class dependencyInjection
                 .AsSelfWithInterfaces()
                 .WithTransientLifetime()
         );
-        
-        
-        // services.AddTransient<ICacheRepository,CacheRepository>();
-        // services.AddTransient<IAdminRepository,AdminRepository>();
-        // services.AddTransient<IMailService, MailService>();
-        // services.AddTransient<ISchemaFactory, SchemaFactory>();
-        // services.AddTransient<IRoleRepository,RoleRepository>();
         return services;
 
         

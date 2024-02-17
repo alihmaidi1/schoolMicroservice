@@ -17,6 +17,8 @@ public class Parent:BaseEntity<ParentID>
     public string Email { get; set; }
     
     
+
+    
     [EncryptColumn]
 
     public string Password { get; set; }

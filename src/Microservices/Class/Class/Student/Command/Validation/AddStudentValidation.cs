@@ -47,6 +47,20 @@ public class AddStudentValidation:AbstractValidator<AddStudentCommand>
             .WithMessage("this parent id  is not exists  in our data");
 
 
+        RuleFor(x => x.Gender)
+            .NotEmpty()
+            .WithMessage("gender should be not empty")
+            .NotNull()
+            .WithMessage("gender should be not null");
+
+
+        RuleFor(x=>x.Number)
+            .NotEmpty()
+            .WithMessage("number should be not empty")
+            .NotNull()
+            .WithMessage("number should be not null")
+            .Must(number=>!studentRepository.IsExists(number))
+            .WithMessage("this number is already exists in our data");
     }
     
     

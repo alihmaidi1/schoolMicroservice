@@ -9,7 +9,9 @@ namespace Class.Student.Command.Handler;
 
 public class StudentCommandHandler:OperationResult,
     ICommandHandler<AddStudentCommand>,
-    ICommandHandler<UpdateStudentCommand>
+    ICommandHandler<UpdateStudentCommand>,
+    ICommandHandler<DeleteStudentCommand>
+
 
 {
     private IStudentRepository studentRepository;
@@ -33,7 +35,9 @@ public class StudentCommandHandler:OperationResult,
             Name = request.Name,
             Email = request.Email,
             Password = request.Password,
-            ParentId=request.ParentId
+            ParentId=request.ParentId,
+            Gender = request.Gender,
+            Number = request.Number
 
         };
          await studentRepository.AddAsync(student);
@@ -53,10 +57,18 @@ public class StudentCommandHandler:OperationResult,
             Id = request.Id,
             Name = request.Name,
             Email = request.Email,
-            ParentId = request.ParentId
+            ParentId = request.ParentId,
+            Gender = request.Gender,
+            Number = request.Number
         };
         
         await studentRepository.UpdateAsync(student);
         return Success("the student was updated successfully");
+    }
+
+    public async Task<JsonResult> Handle(DeleteStudentCommand request, CancellationToken cancellationToken)
+    {
+        studentRepository.Delete(request.Id);
+        return Success("the student was deleted  successfully");
     }
 }

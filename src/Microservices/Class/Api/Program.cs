@@ -14,6 +14,7 @@ using Common.Jwt;
 using Common.Opentelemetry;
 using Common.Redis;
 using Common.Swagger;
+using Common.Versioning;
 using Hangfire;
 using HealthChecks.UI.Client;
 using MediatR;
@@ -23,19 +24,21 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-
 builder.Services.AddControllers();
+
+
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
 
-builder.Services.AddApiVersioning();
+
+
 
 builder.Services.AddConsulConfigure(builder.Configuration);
 builder.Services.AddTransient<ICacheRepository,CacheRepository>();
 
 
 builder.Services.AddHangfire(x => x.UseSqlServerStorage(builder.Configuration["ConnectionStrings:DefaultConnection"]));
+
 builder.Services.AddHangfireServer();
 
 
@@ -59,7 +62,7 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddJwtConfigration(builder.Configuration,JwtSchema.JwtStudent.ToString(),JwtSchema.JwtStudent.ToString(),JwtSchema.JwtAdmin.ToString());
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen().AddOpenApi("student","student Service","v1","student description decoument");
+builder.Services.AddOpenApi("student","student Service","v1","student description decoument");
 builder.Services.AddHttpClient();
 builder.Services.AddRepository();
 
@@ -74,11 +77,7 @@ using(var scope= app.Services.CreateScope()){
 
 app.ConfigureOpenAPI("student");
 
-app.UseSwagger();
-app.UseSwaggerUI();
 app.UseMiddleware<ErrorHandling>();
-
-
 
 app.UseHttpsRedirection();
 

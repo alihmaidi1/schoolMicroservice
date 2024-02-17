@@ -10,13 +10,7 @@ public static class ClassYearQuery
         new GetAllClassYearResponse()
         {
             Id = ClassYear.Id.Value,
-            Billings = ClassYear.Bills.Select(x=>new BillResponse()
-            {
-                Id = x.Id,
-                Money = x.Money,
-                date = x.Date
-                
-            }).ToList()
+            YearName = ClassYear.Year.Name
         };
 
 

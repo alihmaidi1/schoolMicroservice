@@ -20,6 +20,14 @@ public class StudentController:ApiController
     }
 
     
+    [HttpDelete(StudentRouter.prefix)]
+    // [AppAuthorize(AuthenticationSchemes = nameof(JwtSchema.JwtAdmin))]
+    public async Task<IActionResult> DeleteStudent([FromQuery] DeleteStudentCommand command,CancellationToken Token)
+    {
+        var response = await this.Mediator.Send(command,Token);
+        return response;
+    }
+    
     
     [HttpPut(StudentRouter.prefix)]
     // [AppAuthorize(AuthenticationSchemes = nameof(JwtSchema.JwtAdmin))]

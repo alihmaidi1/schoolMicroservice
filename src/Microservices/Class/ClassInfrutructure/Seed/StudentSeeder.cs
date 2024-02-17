@@ -18,7 +18,8 @@ public static class StudentSeeder
             List<Student> students = StudentFaker
                 .GetStudentFaker(parents)
                 .Generate(20)
-                .DistinctBy(x=>new {x.Email})
+                .DistinctBy(x=>x.Email)
+                .DistinctBy(x=>x.Number)
                 .ToList();
             context.Students.AddRange(students);
             context.SaveChanges();

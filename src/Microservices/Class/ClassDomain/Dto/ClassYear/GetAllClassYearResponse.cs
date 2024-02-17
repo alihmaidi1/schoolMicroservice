@@ -5,7 +5,7 @@ public class GetAllClassYearResponse
     
     public Guid Id { get; set; }
     
-    public List<BillResponse> Billings { get; set; }
+    public string YearName { get; set; }
     
 }
 

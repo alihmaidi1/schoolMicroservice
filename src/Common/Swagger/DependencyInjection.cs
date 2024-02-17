@@ -10,13 +10,13 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 
 public  static class DependencyInjection
 {
-       public static IServiceCollection AddOpenApi(this IServiceCollection services,string name,string title,string version,string description)
+       public static IServiceCollection AddOpenApi(this IServiceCollection services,string name,string title,string version,string description,bool signalr=false)
         {
 
+            
             services.AddSwaggerGen(option =>
             {
-
-
+                
                 //create  swagger document
 
                     var openApiInfo = new OpenApiInfo();
@@ -25,11 +25,12 @@ public  static class DependencyInjection
                     openApiInfo.Description = description;
                     option.SwaggerDoc(name, openApiInfo);
 
-
-
+                    
 
                 option.CustomSchemaIds(x => x.FullName);
 
+                
+                option.AddSignalRSwaggerGen();                
                 option.AddSecurityDefinition("Bearer",new OpenApiSecurityScheme()
                 {
 

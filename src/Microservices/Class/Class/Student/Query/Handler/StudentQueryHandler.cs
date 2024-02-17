@@ -20,6 +20,6 @@ public class StudentQueryHandler:OperationResult,
     public async Task<JsonResult> Handle(GetAllStudentQuery request, CancellationToken cancellationToken)
     {
         var Result = StudentRepository.GetAll(request.OrderBy,request.PageNumber,request.PageSize,request.Name,request.ParentName);
-        return Success(Result);
+        return Success(Result,"this is your student");
     }
 }

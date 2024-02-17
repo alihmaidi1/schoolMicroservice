@@ -15,6 +15,7 @@ public class StudentConfigration:IEntityTypeConfiguration<Student>
         builder.Property(x => x.ParentId)
             .HasConversion(x => x.Value, Value => new ParentID(Value));
 
+
         builder.HasMany(x => x.StudentClasses)
             .WithOne(x => x.Student)
             .HasForeignKey(x => x.StudentId)

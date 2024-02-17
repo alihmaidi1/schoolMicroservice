@@ -1,5 +1,5 @@
+using Asp.Versioning;
 using ClassDomain.AppMetaData;
-using ClassDomain.Model.Stage.Query;
 using ClassDomain.Model.Year.Command;
 using ClassDomain.Model.Year.Query;
 using Common.Api;
@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controller;
 
-[ApiVersion("1")]
 public class YearController:ApiController
 {
     
@@ -37,7 +36,7 @@ public class YearController:ApiController
         return response;
     }
     
-    
+    [ApiVersion("1")]
     [HttpGet(YearRouter.prefix)]
     // [AppAuthorize(AuthenticationSchemes = nameof(JwtSchema.JwtAdmin))]
     public async Task<IActionResult> GetAllYear([FromQuery] GetAllYearQuery command,CancellationToken Token)
@@ -46,6 +45,7 @@ public class YearController:ApiController
         return response;
     }
     
-
+    
+    
 
 }

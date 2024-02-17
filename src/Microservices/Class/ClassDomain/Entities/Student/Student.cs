@@ -13,6 +13,7 @@ public class Student:BaseEntity<StudentID>
         StudentClasses = new HashSet<StudentClass.StudentClass>();
         ClassYears = new HashSet<ClassYear.ClassYear>();
         
+        
 
     }
     public string Name { get; set; }
@@ -24,6 +25,10 @@ public class Student:BaseEntity<StudentID>
 
     public string Password { get; set; }
     
+    
+    public int Number { get; set; }
+    
+    public bool Gender { get; set; }
     
     public ParentID ParentId { get; set; }
     public Parent.Parent Parent { get; set; }

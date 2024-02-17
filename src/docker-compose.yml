@@ -37,6 +37,8 @@
       - adminapi
       - teacherapi
       - consul
+      - signalrserver
+      - classapi
     ports:
       - "5005:80"
     
@@ -188,3 +190,19 @@
 
 
   
+  signalrserver:
+    image: alihmaidi/signalrserver
+    container_name: signalrserver
+    build:
+      context: .
+      dockerfile: RealTime/SignalRServer/Dockerfile
+
+    ports:
+      - "5007:80"
+    depends_on:
+      rabbitmq:
+        condition: service_started
+        restart: true
+      consul:
+        condition: service_started
+        restart: true
